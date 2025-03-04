@@ -20,8 +20,8 @@ pygame.display.set_caption("BALD RUN v1.0 - MAP EDITOR")
 
 position = (0, 0)
 tilesize = 25
-
-loadedData = loadJson("Prosjekt-Pygame/maps/map1.json")
+MAP_TO_EDIT = "Prosjekt-Pygame/maps/map1.json" # ENDRE DENNE TIL MAP DU VIL ENDRE
+loadedData = loadJson(MAP_TO_EDIT)
 print(loadedData)
 
 def DisplayMap(mapData):
@@ -30,18 +30,35 @@ def DisplayMap(mapData):
         type = mapData[tile]["type"]
         pygame.draw.rect(win, (200, 200, 200), (pos[0]*tilesize, pos[1]*tilesize, tilesize, tilesize))
 
+def DisplayHover():
+    pos = pygame.mouse.get_pos()
+    pygame.draw.rect(win, (100, 100, 100), (pos[0]-pos[0]%tilesize, pos[1]-pos[1]%tilesize, tilesize, tilesize))
+
+def DrawMap():
+    pos = pygame.mouse.get_pos()
+    click = pygame.mouse.get_pressed()
+    tilepos = pos[0]//tilesize, pos[1]//tilesize
+
+    tileType = "wall"
+    if click[0] == True:
+        loadedData[f"{tilepos[0]},{tilepos[1]}"] = {"type": tileType, "position": tilepos}
+
 
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
+            saveJson(loadedData, MAP_TO_EDIT)
             pygame.quit()
             break
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
+                saveJson(loadedData, MAP_TO_EDIT)
                 pygame.quit()
                 break
     win.fill((0,0,0))
     DisplayMap(loadedData)
+    DisplayHover()
+    DrawMap()
     
     pygame.display.flip()
     clock.tick(60)
