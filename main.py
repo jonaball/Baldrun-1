@@ -41,7 +41,7 @@ class Dude():
         skjerm.blit(self.image, (self.x, self.y))
 
 HAIRSTAGE = "Pygame_spill\Sprites\Head_hair0.png"
-DUDE = Dude(HAIRSTAGE, CENTER_X, CENTER_Y)
+
 
 # Spilløkke
 running = True
@@ -52,15 +52,17 @@ while running:
             pg.quit()
             sys.exit()
         if event.type == pg.KEYDOWN:
-            if event.type == pg.K_0:
+            if event.key == pg.K_0:
                 HAIRSTAGE = "Pygame_spill\Sprites\Head_hair0.png"
-            if event.type == pg.K_1:
+            if event.key == pg.K_1:
                 HAIRSTAGE = "Pygame_spill\Sprites\Head_hair1.png"
-            if event.type == pg.K_2:
+            if event.key == pg.K_2:
                 HAIRSTAGE = "Pygame_spill\Sprites\Head_hair2.png"
-            if event.type == pg.K_3:
+            if event.key == pg.K_3:
                 HAIRSTAGE = "Pygame_spill\Sprites\Head_hair3.png" 
-
+    
+    SKJERM.fill(SVART)
+    DUDE = Dude(HAIRSTAGE, CENTER_X, CENTER_Y)
     DUDE.render(SKJERM)
     pg.display.flip()
     tikk.tick(fps)
