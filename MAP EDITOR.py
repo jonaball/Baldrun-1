@@ -42,6 +42,11 @@ def DrawMap():
     tileType = "wall"
     if click[0] == True:
         loadedData[f"{tilepos[0]},{tilepos[1]}"] = {"type": tileType, "position": tilepos}
+    if click[2] == True:
+        try:
+            loadedData.pop(f"{tilepos[0]},{tilepos[1]}")
+        except:
+            print(f"No tile at {tilepos} to remove.")
 
 
 while True:
