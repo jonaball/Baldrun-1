@@ -1,10 +1,11 @@
 import pygame as pg
 import sys
+import objekter as obj
 
 pg.init()
 
 # Klokke
-fps = 60 # Spill fps
+fps = 120 # Spill fps
 tikk = pg.time.Clock()
 
 # Farger
@@ -20,14 +21,21 @@ SKJERM_BREDDE = 800
 
 # Definer skjerm
 SKJERM = pg.display.set_mode((SKJERM_BREDDE, SKJERM_HØYDE))
-SKJERM.fill(HVIT)
+SKJERM.fill(BLÅ)
+
+SKJERM_CENTER = (SKJERM_BREDDE//2, SKJERM_HØYDE//2)
+
+# Objekter
+obj.Dude("Prosjekt\Pygame_spill\Sprites\Head_hair0.png", SKJERM_CENTER)
 
 # Spilløkke
 running = True
 while running:
     for event in pg.event.get():
         if event.type == pg.QUIT:
+            running = False
             pg.quit()
             sys.exit()
     
     pg.display.flip()
+    tikk.tick(fps)
