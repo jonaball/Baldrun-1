@@ -1,68 +1,81 @@
 import pygame as pg
 import sys
 
-pg.init()
+pg.init() # Start pygame tulling
 
-# Klokke
-fps = 120 # Spill fps
-tikk = pg.time.Clock()
+# --Klokke --
+fps = 60 # Spill fps
+clock = pg.time.Clock()
 
-# Farger
+# -- Farger --
 SVART = (0, 0, 0)
 HVIT = (255, 255 , 255)
 RØD = (255, 0, 0)
 GRØNN = (0, 255, 0)
 BLÅ = (0, 0, 255)
 
-# Skjerminstillinger
+# -- Skjerminstillinger -- 
+pg.display.set_caption("BALD RUN v1.0")
 SKJERM_HØYDE = 720
 SKJERM_BREDDE = 1080
 
-# Definer skjerm
+# -- Definer skjerm --
 SKJERM = pg.display.set_mode((SKJERM_BREDDE, SKJERM_HØYDE))
-SKJERM.fill(SVART)
+BG_FARGE = (SVART)
 
-CENTER_X = SKJERM_BREDDE//2
+CENTER_X = SKJERM_BREDDE//2 # Midten av skjermen
 CENTER_Y = SKJERM_HØYDE//2
 
-# Objekter
+# --------------------------------- Objekter -----------------------------------
+
 class Dude():
     """
     Lag en dude
     """
-    def __init__(self, image, x, y):
-        self.image = pg.image.load(image)
-        self.width = self.image.get_width()
-        self.height = self.image.get_height()
+    def __init__(self, x, y):
+        self.hair0 = pg.image.load("Pygame_spill\Sprites\Head_hair0.png")
+        self.hair1 = pg.image.load("Pygame_spill\Sprites\Head_hair1.png")
+        self.hair2 = pg.image.load("Pygame_spill\Sprites\Head_hair2.png")
+        self.hair3 = pg.image.load("Pygame_spill\Sprites\Head_hair3.png")
+
+        self.frisyre = self.hair0
+
+        self.width = self.frisyre.get_width()
+        self.height = self.frisyre.get_height()
         self.x = x - self.width//2
         self.y = y - self.height//2
 
-    def render(self, skjerm):
-        skjerm.blit(self.image, (self.x, self.y))
-
-HAIRSTAGE = "Pygame_spill\Sprites\Head_hair0.png"
+    def tegn(self, skjerm):
+        skjerm.blit(self.frisyre, (self.x, self.y))
 
 
-# Spilløkke
+# --------------------------------- Spilløkke ------------------------------------
+    
+    # -- Oprett objektene: --
+DUDE = Dude(CENTER_X, CENTER_Y) # Lager en "Dude"
+
 running = True
-while running:
+while running: # Hovedløkken til spillet
+
+    # -- Eventer handler --
     for event in pg.event.get():
-        if event.type == pg.QUIT:
+        if event.type == pg.QUIT: # Når spillet avsluttes ved å trykke på X-en
             running = False
             pg.quit()
             sys.exit()
-        if event.type == pg.KEYDOWN:
+        if event.type == pg.KEYDOWN: # Alle eventer for tastetrykk kommer under her
             if event.key == pg.K_0:
-                HAIRSTAGE = "Pygame_spill\Sprites\Head_hair0.png"
+                DUDE.frisyre = DUDE.hair0
             if event.key == pg.K_1:
-                HAIRSTAGE = "Pygame_spill\Sprites\Head_hair1.png"
+                DUDE.frisyre = DUDE.hair1
             if event.key == pg.K_2:
-                HAIRSTAGE = "Pygame_spill\Sprites\Head_hair2.png"
+                DUDE.frisyre = DUDE.hair2
             if event.key == pg.K_3:
-                HAIRSTAGE = "Pygame_spill\Sprites\Head_hair3.png" 
-    
-    SKJERM.fill(SVART)
-    DUDE = Dude(HAIRSTAGE, CENTER_X, CENTER_Y)
-    DUDE.render(SKJERM)
+                DUDE.frisyre = DUDE.hair3 
+
+    # -- Vis skjermobjekter --
+    SKJERM.fill(BG_FARGE)
+    DUDE.tegn(SKJERM)
+
     pg.display.flip()
-    tikk.tick(fps)
+    clock.tick(fps)
