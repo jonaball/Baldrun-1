@@ -33,10 +33,10 @@ class Dude():
     Lag en dude
     """
     def __init__(self, x, y):
-        self.hair0 = pg.image.load("Pygame_spill\Sprites\Head_hair0.png")
-        self.hair1 = pg.image.load("Pygame_spill\Sprites\Head_hair1.png")
-        self.hair2 = pg.image.load("Pygame_spill\Sprites\Head_hair2.png")
-        self.hair3 = pg.image.load("Pygame_spill\Sprites\Head_hair3.png")
+        self.hair0 = pg.image.load("Prosjekt-Pygame\Sprites\Head_hair0.png")
+        self.hair1 = pg.image.load("Prosjekt-Pygame\Sprites\Head_hair1.png")
+        self.hair2 = pg.image.load("Prosjekt-Pygame\Sprites\Head_hair2.png")
+        self.hair3 = pg.image.load("Prosjekt-Pygame\Sprites\Head_hair3.png")
 
         self.frisyre = self.hair0
 
