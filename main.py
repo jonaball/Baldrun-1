@@ -15,7 +15,7 @@ GRØNN = (0, 255, 0)
 BLÅ = (0, 0, 255)
 
 # -- Skjerminstillinger -- 
-pg.display.set_caption("BALD RUN v1.0")
+pg.display.set_caption("BALD RUN v0.1")
 SKJERM_HØYDE = 720
 SKJERM_BREDDE = 1080
 
@@ -53,6 +53,7 @@ class Dude():
     
     # -- Oprett objektene: --
 DUDE = Dude(CENTER_X, CENTER_Y) # Lager en "Dude"
+MAP_1 = "Prosjekt-Pygame\maps\map1.json"
 
 running = True
 while running: # Hovedløkken til spillet
