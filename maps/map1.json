@@ -104,48 +104,6 @@
             9
         ]
     },
-    "16,8": {
-        "type": "wall",
-        "position": [
-            16,
-            8
-        ]
-    },
-    "16,9": {
-        "type": "wall",
-        "position": [
-            16,
-            9
-        ]
-    },
-    "16,10": {
-        "type": "wall",
-        "position": [
-            16,
-            10
-        ]
-    },
-    "16,11": {
-        "type": "wall",
-        "position": [
-            16,
-            11
-        ]
-    },
-    "16,12": {
-        "type": "wall",
-        "position": [
-            16,
-            12
-        ]
-    },
-    "16,6": {
-        "type": "wall",
-        "position": [
-            16,
-            6
-        ]
-    },
     "7,11": {
         "type": "wall",
         "position": [
@@ -230,20 +188,6 @@
             17
         ]
     },
-    "16,15": {
-        "type": "wall",
-        "position": [
-            16,
-            15
-        ]
-    },
-    "16,16": {
-        "type": "wall",
-        "position": [
-            16,
-            16
-        ]
-    },
     "16,20": {
         "type": "wall",
         "position": [
@@ -279,11 +223,67 @@
             19
         ]
     },
+    "16,15": {
+        "type": "wall",
+        "position": [
+            16,
+            15
+        ]
+    },
+    "16,16": {
+        "type": "wall",
+        "position": [
+            16,
+            16
+        ]
+    },
     "16,17": {
         "type": "wall",
         "position": [
             16,
             17
+        ]
+    },
+    "16,12": {
+        "type": "wall",
+        "position": [
+            16,
+            12
+        ]
+    },
+    "16,11": {
+        "type": "wall",
+        "position": [
+            16,
+            11
+        ]
+    },
+    "16,10": {
+        "type": "wall",
+        "position": [
+            16,
+            10
+        ]
+    },
+    "16,9": {
+        "type": "wall",
+        "position": [
+            16,
+            9
+        ]
+    },
+    "16,8": {
+        "type": "wall",
+        "position": [
+            16,
+            8
+        ]
+    },
+    "16,6": {
+        "type": "wall",
+        "position": [
+            16,
+            6
         ]
     }
 }
