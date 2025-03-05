@@ -285,5 +285,124 @@
             16,
             6
         ]
+    },
+    "32,6": {
+        "type": "wall",
+        "position": [
+            32,
+            6
+        ]
+    },
+    "32,7": {
+        "type": "wall",
+        "position": [
+            32,
+            7
+        ]
+    },
+    "32,9": {
+        "type": "wall",
+        "position": [
+            32,
+            9
+        ]
+    },
+    "32,10": {
+        "type": "wall",
+        "position": [
+            32,
+            10
+        ]
+    },
+    "32,11": {
+        "type": "wall",
+        "position": [
+            32,
+            11
+        ]
+    },
+    "32,12": {
+        "type": "wall",
+        "position": [
+            32,
+            12
+        ]
+    },
+    "32,13": {
+        "type": "wall",
+        "position": [
+            32,
+            13
+        ]
+    },
+    "32,14": {
+        "type": "wall",
+        "position": [
+            32,
+            14
+        ]
+    },
+    "32,8": {
+        "type": "wall",
+        "position": [
+            32,
+            8
+        ]
+    },
+    "31,6": {
+        "type": "wall",
+        "position": [
+            31,
+            6
+        ]
+    },
+    "31,7": {
+        "type": "wall",
+        "position": [
+            31,
+            7
+        ]
+    },
+    "30,7": {
+        "type": "wall",
+        "position": [
+            30,
+            7
+        ]
+    },
+    "30,15": {
+        "type": "wall",
+        "position": [
+            30,
+            15
+        ]
+    },
+    "30,14": {
+        "type": "wall",
+        "position": [
+            30,
+            14
+        ]
+    },
+    "31,14": {
+        "type": "wall",
+        "position": [
+            31,
+            14
+        ]
+    },
+    "32,15": {
+        "type": "wall",
+        "position": [
+            32,
+            15
+        ]
+    },
+    "33,15": {
+        "type": "wall",
+        "position": [
+            33,
+            15
+        ]
     }
 }
