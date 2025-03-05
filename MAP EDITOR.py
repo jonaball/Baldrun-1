@@ -47,39 +47,26 @@ print(loadedData)
 
 tileset = pygame.image.load("Prosjekt-Pygame/Sprites/Map/Template.png")
 tiles = {
-    "i": tileset.subsurface(0,0, 3,3),
-    "tb": tileset.subsurface(3,0, 3,3),
-    "rl": tileset.subsurface(6,0, 3,3),
-    "rb": tileset.subsurface(9,0, 3,3),
-    "tr": tileset.subsurface(0,3, 3,3),
-    "tl": tileset.subsurface(3,3, 3,3),
-    "bl": tileset.subsurface(6,3, 3,3),
-    "b": tileset.subsurface(9,3, 3,3),
-    "r": tileset.subsurface(0,6, 3,3),
-    "t": tileset.subsurface(3,6, 3,3),
-    "l": tileset.subsurface(6,6, 3,3),
-    "rbl": tileset.subsurface(9,6, 3,3),
-    "trb": tileset.subsurface(0,9, 3,3),
-    "trl": tileset.subsurface(3,9, 3,3),
-    "tbl": tileset.subsurface(6,9, 3,3),
-    "trbl": tileset.subsurface(9,9, 3,3)
+    0: tileset.subsurface(0,0, 3,3)
 }
 
 def DisplayMap():
     for tile in loadedData:
         pos = loadedData[tile]["position"]
         type = loadedData[tile]["type"]
+        image = pygame.transform.scale(ConnectingTiles(tile), (tilesize, tilesize))
         pygame.draw.rect(win, (200, 200, 200), (pos[0]*tilesize, pos[1]*tilesize, tilesize, tilesize))
+        win.blit(image, (pos[0]*tilesize, pos[1]*tilesize))
 
 def DisplayHover():
     pos = pygame.mouse.get_pos()
     pygame.draw.rect(win, (100, 100, 100), (pos[0]-pos[0]%tilesize, pos[1]-pos[1]%tilesize, tilesize, tilesize))
-    win.blit(pygame.transform.scale(tiles["i"], (tilesize, tilesize)), (pos[0]-pos[0]%tilesize, pos[1]-pos[1]%tilesize))
+    win.blit(pygame.transform.scale(tiles["0"], (tilesize, tilesize)), (pos[0]-pos[0]%tilesize, pos[1]-pos[1]%tilesize))
 
 def DrawMap():
     pos = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
-    tilepos = pos[0]//tilesize, pos[1]//tilesize
+    tilepos = [pos[0]//tilesize, pos[1]//tilesize]
 
     tileType = "wall"
     if click[0] == True:
@@ -91,7 +78,30 @@ def DrawMap():
             print(f"No tile at {tilepos} to remove.")
 
 def ConnectingTiles(tile):
-    pass
+    data = 0
+    tilepos = loadedData[tile]["position"]
+    print(tilepos)
+    for surround in loadedData:
+        pos = loadedData[surround]["position"]
+        if pos == [tilepos[0], tilepos[1]-1]:
+            data += 1
+        if pos == [tilepos[0]+1, tilepos[1]]:
+            data += 2
+        if pos == [tilepos[0], tilepos[1]+1]:
+            data += 4
+        if pos == [tilepos[0]-1, tilepos[1]]:
+            data += 8
+        # DIAGONAL
+        if pos == [tilepos[0]+1, tilepos[1]-1]:
+            data += 16
+        if pos == [tilepos[0]+1, tilepos[1]+1]:
+            data += 32
+        if pos == [tilepos[0]-1, tilepos[1]+1]:
+            data += 64
+        if pos == [tilepos[0]-1, tilepos[1]-1]:
+            data += 128
+    return tiles[str(data)]
+
 
 while True:
     for event in pygame.event.get():
