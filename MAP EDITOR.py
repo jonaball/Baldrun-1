@@ -45,23 +45,15 @@ MAP_TO_EDIT = f"Prosjekt-Pygame/maps/map{currentMap}.json" # ENDRE DENNE TIL MAP
 loadedData = loadJson(MAP_TO_EDIT)
 print(loadedData)
 
-tileset = pygame.image.load("Prosjekt-Pygame/Sprites/Map/Template.png")
-tiles = {
-    0: tileset.subsurface(0,0, 3,3)
-}
-
 def DisplayMap():
     for tile in loadedData:
         pos = loadedData[tile]["position"]
         type = loadedData[tile]["type"]
-        image = pygame.transform.scale(ConnectingTiles(tile), (tilesize, tilesize))
         pygame.draw.rect(win, (200, 200, 200), (pos[0]*tilesize, pos[1]*tilesize, tilesize, tilesize))
-        win.blit(image, (pos[0]*tilesize, pos[1]*tilesize))
 
 def DisplayHover():
     pos = pygame.mouse.get_pos()
     pygame.draw.rect(win, (100, 100, 100), (pos[0]-pos[0]%tilesize, pos[1]-pos[1]%tilesize, tilesize, tilesize))
-    win.blit(pygame.transform.scale(tiles["0"], (tilesize, tilesize)), (pos[0]-pos[0]%tilesize, pos[1]-pos[1]%tilesize))
 
 def DrawMap():
     pos = pygame.mouse.get_pos()
@@ -76,32 +68,6 @@ def DrawMap():
             loadedData.pop(f"{tilepos[0]},{tilepos[1]}")
         except:
             print(f"No tile at {tilepos} to remove.")
-
-def ConnectingTiles(tile):
-    data = 0
-    tilepos = loadedData[tile]["position"]
-    print(tilepos)
-    for surround in loadedData:
-        pos = loadedData[surround]["position"]
-        if pos == [tilepos[0], tilepos[1]-1]:
-            data += 1
-        if pos == [tilepos[0]+1, tilepos[1]]:
-            data += 2
-        if pos == [tilepos[0], tilepos[1]+1]:
-            data += 4
-        if pos == [tilepos[0]-1, tilepos[1]]:
-            data += 8
-        # DIAGONAL
-        if pos == [tilepos[0]+1, tilepos[1]-1]:
-            data += 16
-        if pos == [tilepos[0]+1, tilepos[1]+1]:
-            data += 32
-        if pos == [tilepos[0]-1, tilepos[1]+1]:
-            data += 64
-        if pos == [tilepos[0]-1, tilepos[1]-1]:
-            data += 128
-    return tiles[str(data)]
-
 
 while True:
     for event in pygame.event.get():
