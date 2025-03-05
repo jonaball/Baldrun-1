@@ -16,7 +16,7 @@ GRØNN = (0, 255, 0)
 BLÅ = (0, 0, 255)
 
 # -- Skjerminstillinger -- 
-pg.display.set_caption("BALD RUN v1.0")
+pg.display.set_caption("BALD RUN v0.1")
 SKJERM_HØYDE = 720
 SKJERM_BREDDE = 1080
 
