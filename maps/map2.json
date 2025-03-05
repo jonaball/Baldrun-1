@@ -1,0 +1,86 @@
+{
+    "22,5": {
+        "type": "wall",
+        "position": [
+            22,
+            5
+        ]
+    },
+    "23,6": {
+        "type": "wall",
+        "position": [
+            23,
+            6
+        ]
+    },
+    "23,7": {
+        "type": "wall",
+        "position": [
+            23,
+            7
+        ]
+    },
+    "22,7": {
+        "type": "wall",
+        "position": [
+            22,
+            7
+        ]
+    },
+    "22,8": {
+        "type": "wall",
+        "position": [
+            22,
+            8
+        ]
+    },
+    "17,8": {
+        "type": "wall",
+        "position": [
+            17,
+            8
+        ]
+    },
+    "17,9": {
+        "type": "wall",
+        "position": [
+            17,
+            9
+        ]
+    },
+    "17,10": {
+        "type": "wall",
+        "position": [
+            17,
+            10
+        ]
+    },
+    "16,10": {
+        "type": "wall",
+        "position": [
+            16,
+            10
+        ]
+    },
+    "16,11": {
+        "type": "wall",
+        "position": [
+            16,
+            11
+        ]
+    },
+    "15,11": {
+        "type": "wall",
+        "position": [
+            15,
+            11
+        ]
+    },
+    "14,11": {
+        "type": "wall",
+        "position": [
+            14,
+            11
+        ]
+    }
+}

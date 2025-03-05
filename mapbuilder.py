@@ -1,8 +1,12 @@
 import pygame as pg
 import pygame
 import json
+import os
 
 def loadJson(filename) -> dict:
+    if not os.path.exists(filename):
+        with open(filename, 'w') as f:
+            json.dump({}, f)
     with open(filename, 'r') as f:
         return json.load(f)
 
@@ -20,7 +24,8 @@ pygame.display.set_caption("BALD RUN v1.0 - MAP EDITOR")
 
 position = (0, 0)
 tilesize = 25
-MAP_TO_EDIT = "Prosjekt-Pygame/maps/map1.json" # ENDRE DENNE TIL MAP DU VIL ENDRE
+currentMap = 1
+MAP_TO_EDIT = f"Prosjekt-Pygame/maps/map{currentMap}.json" # ENDRE DENNE TIL MAP DU VIL ENDRE
 loadedData = loadJson(MAP_TO_EDIT)
 print(loadedData)
 
@@ -60,6 +65,21 @@ while True:
                 saveJson(loadedData, MAP_TO_EDIT)
                 pygame.quit()
                 break
+            if event.key == pygame.K_RIGHT:
+                # SAVE
+                saveJson(loadedData, MAP_TO_EDIT)
+                # LOAD
+                currentMap += 1
+                MAP_TO_EDIT = f"Prosjekt-Pygame/maps/map{currentMap}.json"
+                loadedData = loadJson(MAP_TO_EDIT)
+            if event.key == pygame.K_LEFT:
+                if currentMap != 1:
+                    # SAVE
+                    saveJson(loadedData, MAP_TO_EDIT)
+                    # LOAD
+                    currentMap -= 1
+                    MAP_TO_EDIT = f"Prosjekt-Pygame/maps/map{currentMap}.json"
+                    loadedData = loadJson(MAP_TO_EDIT)
     win.fill((0,0,0))
     DisplayMap(loadedData)
     DisplayHover()
