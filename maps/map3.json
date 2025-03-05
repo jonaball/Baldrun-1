@@ -1,0 +1,226 @@
+{
+    "22,5": {
+        "type": "wall",
+        "position": [
+            22,
+            5
+        ]
+    },
+    "23,6": {
+        "type": "wall",
+        "position": [
+            23,
+            6
+        ]
+    },
+    "23,7": {
+        "type": "wall",
+        "position": [
+            23,
+            7
+        ]
+    },
+    "22,7": {
+        "type": "wall",
+        "position": [
+            22,
+            7
+        ]
+    },
+    "22,8": {
+        "type": "wall",
+        "position": [
+            22,
+            8
+        ]
+    },
+    "17,8": {
+        "type": "wall",
+        "position": [
+            17,
+            8
+        ]
+    },
+    "15,11": {
+        "type": "wall",
+        "position": [
+            15,
+            11
+        ]
+    },
+    "14,11": {
+        "type": "wall",
+        "position": [
+            14,
+            11
+        ]
+    },
+    "23,12": {
+        "type": "wall",
+        "position": [
+            23,
+            12
+        ]
+    },
+    "24,12": {
+        "type": "wall",
+        "position": [
+            24,
+            12
+        ]
+    },
+    "24,13": {
+        "type": "wall",
+        "position": [
+            24,
+            13
+        ]
+    },
+    "25,13": {
+        "type": "wall",
+        "position": [
+            25,
+            13
+        ]
+    },
+    "26,13": {
+        "type": "wall",
+        "position": [
+            26,
+            13
+        ]
+    },
+    "27,13": {
+        "type": "wall",
+        "position": [
+            27,
+            13
+        ]
+    },
+    "27,14": {
+        "type": "wall",
+        "position": [
+            27,
+            14
+        ]
+    },
+    "27,15": {
+        "type": "wall",
+        "position": [
+            27,
+            15
+        ]
+    },
+    "26,16": {
+        "type": "wall",
+        "position": [
+            26,
+            16
+        ]
+    },
+    "25,16": {
+        "type": "wall",
+        "position": [
+            25,
+            16
+        ]
+    },
+    "27,16": {
+        "type": "wall",
+        "position": [
+            27,
+            16
+        ]
+    },
+    "28,16": {
+        "type": "wall",
+        "position": [
+            28,
+            16
+        ]
+    },
+    "29,17": {
+        "type": "wall",
+        "position": [
+            29,
+            17
+        ]
+    },
+    "30,17": {
+        "type": "wall",
+        "position": [
+            30,
+            17
+        ]
+    },
+    "30,18": {
+        "type": "wall",
+        "position": [
+            30,
+            18
+        ]
+    },
+    "29,18": {
+        "type": "wall",
+        "position": [
+            29,
+            18
+        ]
+    },
+    "29,19": {
+        "type": "wall",
+        "position": [
+            29,
+            19
+        ]
+    },
+    "28,19": {
+        "type": "wall",
+        "position": [
+            28,
+            19
+        ]
+    },
+    "27,20": {
+        "type": "wall",
+        "position": [
+            27,
+            20
+        ]
+    },
+    "26,20": {
+        "type": "wall",
+        "position": [
+            26,
+            20
+        ]
+    },
+    "25,20": {
+        "type": "wall",
+        "position": [
+            25,
+            20
+        ]
+    },
+    "24,20": {
+        "type": "wall",
+        "position": [
+            24,
+            20
+        ]
+    },
+    "23,20": {
+        "type": "wall",
+        "position": [
+            23,
+            20
+        ]
+    },
+    "22,20": {
+        "type": "wall",
+        "position": [
+            22,
+            20
+        ]
+    }
+}

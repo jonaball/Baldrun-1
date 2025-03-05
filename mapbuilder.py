@@ -2,11 +2,27 @@ import pygame as pg
 import pygame
 import json
 import os
+from tkinter import messagebox
+import tkinter
 
-def loadJson(filename) -> dict:
+def confirm(map):
+    result = messagebox.askyesno("Lag ny fil", f"map{map}.json finnes ikke. Vil du lage den?")
+    if result:
+        return True
+    else:
+        return False
+
+root = tkinter.Tk()
+root.withdraw()
+
+def loadJson(filename):
+    global currentMap
     if not os.path.exists(filename):
-        with open(filename, 'w') as f:
-            json.dump({}, f)
+        if confirm(currentMap):
+            with open(filename, 'w') as f:
+                json.dump({}, f)
+        else: 
+            return None
     with open(filename, 'r') as f:
         return json.load(f)
 
@@ -29,15 +45,36 @@ MAP_TO_EDIT = f"Prosjekt-Pygame/maps/map{currentMap}.json" # ENDRE DENNE TIL MAP
 loadedData = loadJson(MAP_TO_EDIT)
 print(loadedData)
 
-def DisplayMap(mapData):
-    for tile in mapData:
-        pos = mapData[tile]["position"]
-        type = mapData[tile]["type"]
+tileset = pygame.image.load("Prosjekt-Pygame/Sprites/Map/Template.png")
+tiles = {
+    "i": tileset.subsurface(0,0, 3,3),
+    "tb": tileset.subsurface(3,0, 3,3),
+    "rl": tileset.subsurface(6,0, 3,3),
+    "rb": tileset.subsurface(9,0, 3,3),
+    "tr": tileset.subsurface(0,3, 3,3),
+    "tl": tileset.subsurface(3,3, 3,3),
+    "bl": tileset.subsurface(6,3, 3,3),
+    "b": tileset.subsurface(9,3, 3,3),
+    "r": tileset.subsurface(0,6, 3,3),
+    "t": tileset.subsurface(3,6, 3,3),
+    "l": tileset.subsurface(6,6, 3,3),
+    "rbl": tileset.subsurface(9,6, 3,3),
+    "trb": tileset.subsurface(0,9, 3,3),
+    "trl": tileset.subsurface(3,9, 3,3),
+    "tbl": tileset.subsurface(6,9, 3,3),
+    "trbl": tileset.subsurface(9,9, 3,3)
+}
+
+def DisplayMap():
+    for tile in loadedData:
+        pos = loadedData[tile]["position"]
+        type = loadedData[tile]["type"]
         pygame.draw.rect(win, (200, 200, 200), (pos[0]*tilesize, pos[1]*tilesize, tilesize, tilesize))
 
 def DisplayHover():
     pos = pygame.mouse.get_pos()
     pygame.draw.rect(win, (100, 100, 100), (pos[0]-pos[0]%tilesize, pos[1]-pos[1]%tilesize, tilesize, tilesize))
+    win.blit(pygame.transform.scale(tiles["i"], (tilesize, tilesize)), (pos[0]-pos[0]%tilesize, pos[1]-pos[1]%tilesize))
 
 def DrawMap():
     pos = pygame.mouse.get_pos()
@@ -53,6 +90,8 @@ def DrawMap():
         except:
             print(f"No tile at {tilepos} to remove.")
 
+def ConnectingTiles(tile):
+    pass
 
 while True:
     for event in pygame.event.get():
@@ -71,7 +110,11 @@ while True:
                 # LOAD
                 currentMap += 1
                 MAP_TO_EDIT = f"Prosjekt-Pygame/maps/map{currentMap}.json"
-                loadedData = loadJson(MAP_TO_EDIT)
+                if loadJson(MAP_TO_EDIT) != None:
+                    loadedData = loadJson(MAP_TO_EDIT)
+                else:
+                    currentMap -= 1
+                    MAP_TO_EDIT = f"Prosjekt-Pygame/maps/map{currentMap}.json"
             if event.key == pygame.K_LEFT:
                 if currentMap != 1:
                     # SAVE
@@ -80,8 +123,9 @@ while True:
                     currentMap -= 1
                     MAP_TO_EDIT = f"Prosjekt-Pygame/maps/map{currentMap}.json"
                     loadedData = loadJson(MAP_TO_EDIT)
+            
     win.fill((0,0,0))
-    DisplayMap(loadedData)
+    DisplayMap()
     DisplayHover()
     DrawMap()
     
