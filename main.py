@@ -1,5 +1,4 @@
 import pygame as pg
-from mapbuilder import DisplayMap
 import sys
 
 pg.init() # Start pygame tulling
@@ -76,7 +75,7 @@ while running: # Hovedløkken til spillet
                 DUDE.frisyre = DUDE.hair3 
 
     # -- Vis skjermobjekter --
-    # DisplayMap(MAP_1)
+    SKJERM.fill(BG_FARGE)
     DUDE.tegn(SKJERM)
 
     pg.display.flip()
