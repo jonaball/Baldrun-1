@@ -76,7 +76,7 @@ while running: # Hovedløkken til spillet
                 DUDE.frisyre = DUDE.hair3 
 
     # -- Vis skjermobjekter --
-    DisplayMap(MAP_1)
+    # DisplayMap(MAP_1)
     DUDE.tegn(SKJERM)
 
     pg.display.flip()
