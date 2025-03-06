@@ -27,6 +27,7 @@ BG_FARGE = (SVART)
 CENTER_X = SKJERM_BREDDE//2 # Midten av skjermen
 CENTER_Y = SKJERM_HØYDE//2
 
+
 # --------------------------------- Objektkontroll -----------------------------------
 
 class Dude():
@@ -53,19 +54,20 @@ class Map():
     """
     Lag mappet
     """
-    def __init__(self):
+    def __init__(self, loadedmap):
         self.tilesize = 25
+        self.loadedmap = loadedmap
 
     def LoadMap(mapfil):
         with open(mapfil, "r") as fil:
             return json.load(fil)
         
-    def VisMap(self, loadedmap):
+    def VisMap(loadedmap):
+        tilesize = 25
         for tile in loadedmap:
             pos = loadedmap[tile]["position"]
             type = loadedmap[tile]["type"]
-            pg.draw.rect(SKJERM, (200, 200, 200), (pos[0]*self.tilesize, pos[1]*self.tilesize, self.tilesize, self.tilesize))
-
+            pg.draw.rect(SKJERM, (200, 200, 200), (pos[0]*tilesize, pos[1]*tilesize, tilesize, tilesize))
 
 
 # --------------------------------- Spilløkke ------------------------------------
