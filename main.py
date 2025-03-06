@@ -105,6 +105,7 @@ while running:
             pg.quit()
             sys.exit()
         if event.type == pg.KEYDOWN: # Alle eventer for tastetrykk kommer under her
+            # Debug - hårfrisyre stuff
             if event.key == pg.K_0:
                 DUDE.frisyre = DUDE.hair0
             if event.key == pg.K_1:
@@ -114,7 +115,8 @@ while running:
             if event.key == pg.K_3:
                 DUDE.frisyre = DUDE.hair3 
             DUDE.oppdater_frisyre() # VIKTIG! passer på at duden er skalert riktig når frisyren byttes
-            
+
+            # Movement (flytter mappet)
             if event.key == pg.K_w:
                 MAP.offset_y +10/fps
             if event.key == pg.K_a:
