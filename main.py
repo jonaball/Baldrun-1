@@ -71,6 +71,8 @@ class Map():
     """
     def __init__(self, scale):
         self.tilesize = scale
+        self.offset_x = 0
+        self.offset_y = 0
 
     def LoadMap(self, mapfil):
         with open(mapfil, "r") as fil:
@@ -81,7 +83,7 @@ class Map():
         for tile in loadedmap:
             pos = loadedmap[tile]["position"]
             type = loadedmap[tile]["type"]
-            pg.draw.rect(SKJERM, (200, 200, 200), (pos[0]*tilesize, pos[1]*tilesize, tilesize, tilesize))
+            pg.draw.rect(SKJERM, (HVIT), (pos[0]*tilesize + self.offset_x, pos[1]*tilesize + self.offset_y, tilesize, tilesize))
 
 
 # --------------------------------- Spilløkke ------------------------------------
@@ -112,6 +114,15 @@ while running:
             if event.key == pg.K_3:
                 DUDE.frisyre = DUDE.hair3 
             DUDE.oppdater_frisyre() # VIKTIG! passer på at duden er skalert riktig når frisyren byttes
+            
+            if event.key == pg.K_w:
+                MAP.offset_y +10/fps
+            if event.key == pg.K_a:
+                MAP.offset_x +10/fps    
+            if event.key == pg.K_s:
+                MAP.offset_y -10/fps
+            if event.key == pg.K_d:
+                MAP.offset_x -10/fps
 
     # -- Vis skjermobjekter --
     SKJERM.fill(BG_FARGE)
