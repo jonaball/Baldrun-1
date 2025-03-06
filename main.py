@@ -54,16 +54,16 @@ class Map():
     """
     Lag mappet
     """
-    def __init__(self, loadedmap):
+    def __init__(self):
         self.tilesize = 25
-        self.loadedmap = loadedmap
 
-    def LoadMap(mapfil):
+
+    def LoadMap(self, mapfil):
         with open(mapfil, "r") as fil:
             return json.load(fil)
         
-    def VisMap(loadedmap):
-        tilesize = 25
+    def VisMap(self, loadedmap):
+        tilesize = self.tilesize
         for tile in loadedmap:
             pos = loadedmap[tile]["position"]
             type = loadedmap[tile]["type"]
@@ -74,8 +74,9 @@ class Map():
     
     # -- Oprett objektene: --
 DUDE = Dude(CENTER_X, CENTER_Y) # Lager en "Dude"
-MAP_1 = Map.LoadMap("Prosjekt-Pygame\maps\map1.json")
 
+MAP = Map()
+MAP_1 = MAP.LoadMap("Prosjekt-Pygame/maps/map1.json")
 
 running = True
 while running: # Hovedløkken til spillet
@@ -98,7 +99,7 @@ while running: # Hovedløkken til spillet
 
     # -- Vis skjermobjekter --
     SKJERM.fill(BG_FARGE)
-    Map.VisMap(MAP_1)
+    MAP.VisMap(MAP_1)
     DUDE.tegn(SKJERM)
 
     pg.display.flip()
