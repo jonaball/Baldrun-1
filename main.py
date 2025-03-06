@@ -23,7 +23,7 @@ SKJERM_HØYDE = 720
 SKJERM_BREDDE = 1080
 
 # -- Mapinstillinger --
-MAP_STØRRELSE = 200 # 100 = normal
+MAP_STØRRELSE = 180 # 180 = normal
 
 # -- Objektinstillinger --
 DUDE_STØRRELSE = (150, 150) # BREDDE x HØYDE
@@ -71,8 +71,8 @@ class Map():
     """
     def __init__(self, scale):
         self.tilesize = scale
-        self.offset_x = 0
-        self.offset_y = 0
+        self.offset_x = -3330 # Startposisjon (midten av kartet)
+        self.offset_y = -2350
 
     def LoadMap(self, mapfil):
         with open(mapfil, "r") as fil:
@@ -83,7 +83,7 @@ class Map():
         for tile in loadedmap:
             pos = loadedmap[tile]["position"]
             type = loadedmap[tile]["type"]
-            pg.draw.rect(SKJERM, (HVIT), (pos[0]*tilesize + self.offset_x, pos[1]*tilesize + self.offset_y, tilesize, tilesize))
+            pg.draw.rect(SKJERM, (HVIT), (pos[0] * tilesize + self.offset_x, pos[1] * tilesize + self.offset_y, tilesize, tilesize))
 
 
 # --------------------------------- Spilløkke ------------------------------------
@@ -104,27 +104,18 @@ while running:
             running = False
             pg.quit()
             sys.exit()
-        if event.type == pg.KEYDOWN: # Alle eventer for tastetrykk kommer under her
-            # Debug - hårfrisyre stuff
-            if event.key == pg.K_0:
-                DUDE.frisyre = DUDE.hair0
-            if event.key == pg.K_1:
-                DUDE.frisyre = DUDE.hair1
-            if event.key == pg.K_2:
-                DUDE.frisyre = DUDE.hair2
-            if event.key == pg.K_3:
-                DUDE.frisyre = DUDE.hair3 
-            DUDE.oppdater_frisyre() # VIKTIG! passer på at duden er skalert riktig når frisyren byttes
 
-            # Movement (flytter mappet)
-            if event.key == pg.K_w:
-                MAP.offset_y +10/fps
-            if event.key == pg.K_a:
-                MAP.offset_x +10/fps    
-            if event.key == pg.K_s:
-                MAP.offset_y -10/fps
-            if event.key == pg.K_d:
-                MAP.offset_x -10/fps
+    taster = pg.key.get_pressed() # Holder en liste over alle taster som er trykt ned 
+
+    # Bevegelse (flytter map/bakgrunn)
+    if taster[pg.K_w]:
+        MAP.offset_y += 500/fps
+    if taster[pg.K_a]:
+        MAP.offset_x += 500/fps 
+    if taster[pg.K_s]:
+        MAP.offset_y -= 500/fps
+    if taster[pg.K_d]:
+        MAP.offset_x -= 500/fps
 
     # -- Vis skjermobjekter --
     SKJERM.fill(BG_FARGE)
@@ -133,3 +124,16 @@ while running:
 
     pg.display.flip()
     clock.tick(fps)
+
+    # -- Debug -- 
+    if taster[pg.K_0]:
+        DUDE.frisyre = DUDE.hair0
+    if taster[pg.K_1]:
+        DUDE.frisyre = DUDE.hair1
+    if taster[pg.K_2]:
+        DUDE.frisyre = DUDE.hair2
+    if taster[pg.K_3]:
+        DUDE.frisyre = DUDE.hair3 
+    DUDE.oppdater_frisyre() # VIKTIG! passer på at duden er skalert riktig når frisyren byttes
+
+    print(f"X = {MAP.offset_x}, Y = {MAP.offset_y}")
