@@ -23,7 +23,10 @@ SKJERM_HØYDE = 720
 SKJERM_BREDDE = 1080
 
 # -- Mapinstillinger --
-MAP_STØRRELSE = 25 # 25 = normal
+MAP_STØRRELSE = 200 # 100 = normal
+
+# -- Objektinstillinger --
+DUDE_STØRRELSE = (150, 150) # BREDDE x HØYDE
 
 # -- Definer skjerm --
 SKJERM = pg.display.set_mode((SKJERM_BREDDE, SKJERM_HØYDE))
@@ -39,21 +42,28 @@ class Dude():
     """
     Lag en dude
     """
-    def __init__(self, x, y):
+    def __init__(self, x, y, scale):
         self.hair0 = pg.image.load("Prosjekt-Pygame\Sprites\Head_hair0.png")
         self.hair1 = pg.image.load("Prosjekt-Pygame\Sprites\Head_hair1.png")
         self.hair2 = pg.image.load("Prosjekt-Pygame\Sprites\Head_hair2.png")
         self.hair3 = pg.image.load("Prosjekt-Pygame\Sprites\Head_hair3.png")
 
-        self.frisyre = self.hair0
+        self.frisyre = self.hair0 # Frisyren dude starter med
 
-        self.width = self.frisyre.get_width()
-        self.height = self.frisyre.get_height()
+        self.scale = scale # Størrelsen til dude (Definert i -- Objektinstillinger --)
+        
+        self.width = self.scale[0]
+        self.height = self.scale[1]
         self.x = x - self.width//2
         self.y = y - self.height//2
 
+        self.oppdater_frisyre() # Sørg for at frisyren er oppdatert til den nye størrelsen
+
+    def oppdater_frisyre(self):
+        self.skalert_dude = pg.transform.scale(self.frisyre, self.scale) # Skalerer dude til riktig størrelse
+
     def tegn(self, skjerm):
-        skjerm.blit(self.frisyre, (self.x, self.y))
+        skjerm.blit(self.skalert_dude, (self.x, self.y)) # Viser den nye, og skalerte, duden
 
 class Map():
     """
@@ -77,7 +87,7 @@ class Map():
 # --------------------------------- Spilløkke ------------------------------------
     
 # -- Oprett objektene: --
-DUDE = Dude(CENTER_X, CENTER_Y) # Lager en "Dude"
+DUDE = Dude(CENTER_X, CENTER_Y, DUDE_STØRRELSE) # Lager en "Dude"
 
 MAP = Map(MAP_STØRRELSE) # Lager et instans av Map classen
 MAP_1 = MAP.LoadMap("Prosjekt-Pygame/maps/map1.json")
@@ -101,6 +111,7 @@ while running:
                 DUDE.frisyre = DUDE.hair2
             if event.key == pg.K_3:
                 DUDE.frisyre = DUDE.hair3 
+            DUDE.oppdater_frisyre() # VIKTIG! passer på at duden er skalert riktig når frisyren byttes
 
     # -- Vis skjermobjekter --
     SKJERM.fill(BG_FARGE)
