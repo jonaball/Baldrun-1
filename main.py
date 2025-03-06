@@ -4,6 +4,8 @@ import json
 
 pg.init() # Start pygame tulling
 
+# ----------------------------------Instillinger -------------------------------------
+
 # --Klokke --
 fps = 60 # Spill fps
 clock = pg.time.Clock()
@@ -19,6 +21,9 @@ BLÅ = (0, 0, 255)
 pg.display.set_caption("BALD RUN v0.1")
 SKJERM_HØYDE = 720
 SKJERM_BREDDE = 1080
+
+# -- Mapinstillinger --
+MAP_STØRRELSE = 25 # 25 = normal
 
 # -- Definer skjerm --
 SKJERM = pg.display.set_mode((SKJERM_BREDDE, SKJERM_HØYDE))
@@ -54,9 +59,8 @@ class Map():
     """
     Lag mappet
     """
-    def __init__(self):
-        self.tilesize = 25
-
+    def __init__(self, scale):
+        self.tilesize = scale
 
     def LoadMap(self, mapfil):
         with open(mapfil, "r") as fil:
@@ -72,14 +76,15 @@ class Map():
 
 # --------------------------------- Spilløkke ------------------------------------
     
-    # -- Oprett objektene: --
+# -- Oprett objektene: --
 DUDE = Dude(CENTER_X, CENTER_Y) # Lager en "Dude"
 
-MAP = Map()
+MAP = Map(MAP_STØRRELSE) # Lager et instans av Map classen
 MAP_1 = MAP.LoadMap("Prosjekt-Pygame/maps/map1.json")
 
+# -- Hovedløkken til spillet --
 running = True
-while running: # Hovedløkken til spillet
+while running:
 
     # -- Eventer handler --
     for event in pg.event.get():
