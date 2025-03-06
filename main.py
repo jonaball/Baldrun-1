@@ -1,5 +1,6 @@
 import pygame as pg
 import sys
+import json
 
 pg.init() # Start pygame tulling
 
@@ -26,7 +27,7 @@ BG_FARGE = (SVART)
 CENTER_X = SKJERM_BREDDE//2 # Midten av skjermen
 CENTER_Y = SKJERM_HØYDE//2
 
-# --------------------------------- Objekter -----------------------------------
+# --------------------------------- Objektkontroll -----------------------------------
 
 class Dude():
     """
@@ -48,12 +49,31 @@ class Dude():
     def tegn(self, skjerm):
         skjerm.blit(self.frisyre, (self.x, self.y))
 
+class Map():
+    """
+    Lag mappet
+    """
+    def __init__(self):
+        self.tilesize = 25
+
+    def LoadMap(mapfil):
+        with open(mapfil, "r") as fil:
+            return json.load(fil)
+        
+    def VisMap(self, loadedmap):
+        for tile in loadedmap:
+            pos = loadedmap[tile]["position"]
+            type = loadedmap[tile]["type"]
+            pg.draw.rect(SKJERM, (200, 200, 200), (pos[0]*self.tilesize, pos[1]*self.tilesize, self.tilesize, self.tilesize))
+
+
 
 # --------------------------------- Spilløkke ------------------------------------
     
     # -- Oprett objektene: --
 DUDE = Dude(CENTER_X, CENTER_Y) # Lager en "Dude"
-MAP_1 = "Prosjekt-Pygame\maps\map1.json"
+MAP_1 = Map.LoadMap("Prosjekt-Pygame\maps\map1.json")
+
 
 running = True
 while running: # Hovedløkken til spillet
@@ -76,6 +96,7 @@ while running: # Hovedløkken til spillet
 
     # -- Vis skjermobjekter --
     SKJERM.fill(BG_FARGE)
+    Map.VisMap(MAP_1)
     DUDE.tegn(SKJERM)
 
     pg.display.flip()
