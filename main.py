@@ -65,9 +65,14 @@ class Dude():
         self.y = y - self.height//2
         
         self.opp = 0 # Retningen DUDE peker
-        self.venstre = 90
         self.ned = 180
+        self.venstre = 90
         self.høyre = -90
+        self.opp_venstre = 45
+        self.ned_venstre = 135
+        self.opp_høyre = -45
+        self.ned_høyre = -135
+
         self.retning = self.opp # Startretning er alltid opp
 
         self.oppdater_størrelse() # Sørg for at frisyren er oppdatert til den nye størrelsen
@@ -143,23 +148,55 @@ while running:
     taster = pg.key.get_pressed() # Holder en liste over alle taster som er trykt ned 
 
     # Bevegelse (flytter map/bakgrunn)
-    walking = False
+    walking = False # Default verdien av walking er false (altså man står stille når ingenting skjer)
+    
+    bitmask = 0
     if taster[pg.K_w]:
+        bitmask += 1
+    if taster[pg.K_a]:
+        bitmask += 2
+    if taster[pg.K_s]:
+        bitmask += 4
+    if taster[pg.K_d]:
+        bitmask += 8
+
+    if bitmask == 1: # TRYKKER W
         MAP.offset_y += 500/fps
         DUDE.retning = DUDE.opp
         walking = True
-    if taster[pg.K_a]:
-        MAP.offset_x += 500/fps 
+    elif bitmask == 2: # TRYKKER A
+        MAP.offset_x += 500/fps
         DUDE.retning = DUDE.venstre
         walking = True
-    if taster[pg.K_s]:
+    elif bitmask == 4: # TRYKKER S
         MAP.offset_y -= 500/fps
         DUDE.retning = DUDE.ned
         walking = True
-    if taster[pg.K_d]:
+    elif bitmask == 8: # TRYKKER D
         MAP.offset_x -= 500/fps
         DUDE.retning = DUDE.høyre
         walking = True
+    elif bitmask == 3: # TRYKKER W A
+        MAP.offset_x += 500/fps/1.4
+        MAP.offset_y += 500/fps/1.4
+        DUDE.retning = DUDE.opp_venstre
+        walking = True
+    elif bitmask == 6: # TRYKKER A S
+        MAP.offset_x += 500/fps/1.4
+        MAP.offset_y -= 500/fps/1.4
+        DUDE.retning = DUDE.ned_venstre
+        walking = True
+    elif bitmask == 12: # TRYKKER S D
+        MAP.offset_x -= 500/fps/1.4
+        MAP.offset_y -= 500/fps/1.4
+        DUDE.retning = DUDE.ned_høyre
+        walking = True
+    elif bitmask == 9: # TRYKKER D W
+        MAP.offset_x -= 500/fps/1.4
+        MAP.offset_y += 500/fps/1.4
+        DUDE.retning = DUDE.opp_høyre
+        walking = True
+
     DUDE.oppdater_retning() # VIKTIG! Passer på at duden peker i riktig retning når den byttes
 
     DUDE.oppdater_walkcycle()  # Oppdater walkcycle hvis spilleren går
