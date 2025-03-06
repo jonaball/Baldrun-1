@@ -11,8 +11,9 @@ fps = 60 # Spill fps
 clock = pg.time.Clock()
 
 # -- Farger --
-SVART = (0, 0, 0)
+SVART = (20, 20, 20)
 HVIT = (255, 255 , 255)
+GRÅ = (180, 180, 180)
 RØD = (255, 0, 0)
 GRØNN = (0, 255, 0)
 BLÅ = (0, 0, 255)
@@ -30,7 +31,7 @@ DUDE_STØRRELSE = (150, 150) # BREDDE x HØYDE
 
 # -- Definer skjerm --
 SKJERM = pg.display.set_mode((SKJERM_BREDDE, SKJERM_HØYDE))
-BG_FARGE = (SVART)
+BG_FARGE = (HVIT)
 
 CENTER_X = SKJERM_BREDDE//2 # Midten av skjermen
 CENTER_Y = SKJERM_HØYDE//2
@@ -55,8 +56,7 @@ class Dude():
         self.kropp = self.body0 # Kroppen dude starter med
 
         self.walkcycle = [self.body0, self.body1, self.body2] # Liste med forskjellige "stages" i walkcyclen
-        self.walking_frame = 0 # Hvilken stage av walkcycle som vises (starter på første frame i lista [0])
-        self.walking_timer = 0
+        self.walking_timer = 10
 
         self.scale = scale # Størrelsen til dude (Definert i -- Objektinstillinger --)
         self.width = self.scale[0]
@@ -88,12 +88,17 @@ class Dude():
         skjerm.blit(self.skalert_kropp, (self.x, self.y)) # Viser den nye, og skalerte, duden
 
     def oppdater_walkcycle(self):
-        if self.walking_timer % 5 == 0: # Walking timer går opp med 1 per frame, hver 5 frames er dette sant
-            self.walking_frame += 1
-            if self.walking_frame == 3: # Når cyclen har gått igjennom hele lista (etter 3 stages), starter den på nytt fra 0
-                self.walking_frame = 0 
-            self.kropp = self.walkcycle[self.walking_frame]
-        self.walking_timer += 1 # Øker walking timeren
+        if walking:
+            if self.walking_timer % 10 == 0: # Walking timer går opp med 1 per frame, hver 10 frames er dette sant
+                self.walking_frame += 1
+                if self.walking_frame == 3: # Når cyclen har gått igjennom hele lista (etter 3 stages), starter den på nytt fra 0
+                    self.walking_frame = 0 
+                self.kropp = self.walkcycle[self.walking_frame]
+            self.walking_timer += 1 # Øker walking timeren
+        else: # Setter alt tilbake til standard når spilleren slutter å gå
+            self.kropp = self.body0
+            self.walking_frame = 0
+            self.walking_timer = 0
         
 class Map():
     """
@@ -113,7 +118,7 @@ class Map():
         for tile in loadedmap:
             pos = loadedmap[tile]["position"]
             type = loadedmap[tile]["type"]
-            pg.draw.rect(SKJERM, (HVIT), (pos[0] * tilesize + self.offset_x, pos[1] * tilesize + self.offset_y, tilesize, tilesize))
+            pg.draw.rect(SKJERM, (SVART), (pos[0] * tilesize + self.offset_x, pos[1] * tilesize + self.offset_y, tilesize, tilesize))
 
 
 # --------------------------------- Spilløkke ------------------------------------
@@ -157,11 +162,7 @@ while running:
         walking = True
     DUDE.oppdater_retning() # VIKTIG! Passer på at duden peker i riktig retning når den byttes
 
-    if walking:
-        DUDE.oppdater_walkcycle()  # Oppdater walkcycle hvis spilleren går
-    else:
-        DUDE.walking_frame = 0  # Hvis spilleren står stille, sett tilbake til første bilde i walkcycle
-
+    DUDE.oppdater_walkcycle()  # Oppdater walkcycle hvis spilleren går
 
     # -- Vis skjermobjekter --
     SKJERM.fill(BG_FARGE)
