@@ -44,13 +44,13 @@ class Dude():
     Lag en dude
     """
     def __init__(self, x, y, scale):
-        self.hair0 = pg.image.load("Prosjekt-Pygame\Sprites\Head_hair0.png") # Frisyrer
+        self.hair0 = pg.image.load("Prosjekt-Pygame\Sprites\Head_hair0.png") # Frisyrer (For parykkene)
         self.hair1 = pg.image.load("Prosjekt-Pygame\Sprites\Head_hair1.png")
         self.hair2 = pg.image.load("Prosjekt-Pygame\Sprites\Head_hair2.png")
         self.hair3 = pg.image.load("Prosjekt-Pygame\Sprites\Head_hair3.png")
         self.frisyre = self.hair0 # Frisyren dude starter med
 
-        self.body0 = pg.image.load("Prosjekt-Pygame\Sprites\Body0.png")
+        self.body0 = pg.image.load("Prosjekt-Pygame\Sprites\Body0.png") # Kropp-stadier (for walkcycle)
         self.body1 = pg.image.load("Prosjekt-Pygame\Sprites\Body1.png")
         self.body2 = pg.image.load("Prosjekt-Pygame\Sprites\Body2.png")
         self.kropp = self.body0 # Kroppen dude starter med
@@ -64,7 +64,7 @@ class Dude():
         self.x = x - self.width//2
         self.y = y - self.height//2
         
-        self.opp = 0
+        self.opp = 0 # Retningen DUDE peker
         self.venstre = 90
         self.ned = 180
         self.høyre = -90
