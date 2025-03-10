@@ -13,7 +13,7 @@ clock = pg.time.Clock()
 # -- Farger --
 SVART = (20, 20, 20)
 HVIT = (255, 255 , 255)
-GRÅ = (180, 180, 180)
+GRÅ = (80, 80, 80)
 RØD = (255, 0, 0)
 GRØNN = (0, 255, 0)
 BLÅ = (0, 0, 255)
@@ -25,6 +25,7 @@ SKJERM_BREDDE = 1080
 
 # -- Mapinstillinger --
 MAP_STØRRELSE = 200 # 200 = normal
+VEGG_FARGE = (GRÅ)
 
 # -- Objektinstillinger --
 DUDE_STØRRELSE = (150, 150) # BREDDE x HØYDE
@@ -88,8 +89,9 @@ class Dude():
         self.rotert_kropp = pg.transform.rotate(self.skalert_kropp, self.retning)
 
     def lag_rect(self):
-        self.dude_rect = self.rotert_hode.get_rect(center = (self.x, self.y))
-        
+        """ Oppdater rect til å være sentrert på (self.x, self.y) etter rotasjon """
+        self.dude_rect = self.rotert_hode.get_rect(center = (CENTER_X, CENTER_Y))
+
     def tegn_hode(self, skjerm):
         skjerm.blit(self.rotert_hode, self.dude_rect) # Viser den nye, og skalerte, duden
 
@@ -127,7 +129,7 @@ class Map():
         for tile in loadedmap:
             pos = loadedmap[tile]["position"]
             type = loadedmap[tile]["type"]
-            pg.draw.rect(SKJERM, (SVART), (pos[0] * tilesize + self.offset_x, pos[1] * tilesize + self.offset_y, tilesize, tilesize))
+            pg.draw.rect(SKJERM, (VEGG_FARGE), (pos[0] * tilesize + self.offset_x, pos[1] * tilesize + self.offset_y, tilesize, tilesize))
 
 
 # --------------------------------- Spilløkke ------------------------------------
