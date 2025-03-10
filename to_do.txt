@@ -1,0 +1,18 @@
+-- Core --
+
+Collisions
+UI (parykker, timer)
+Main Menu
+Map Menu
+Vision Cone
+
+-- Gameplay --
+
+Parykker
+Map Layout
+Jumpscares (frisør)
+
+-- Polish --
+
+Map design / texture
+Sound design

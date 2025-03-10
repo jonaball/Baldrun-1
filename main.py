@@ -77,24 +77,24 @@ class Dude():
 
         self.oppdater_størrelse() # Sørg for at frisyren er oppdatert til den nye størrelsen
         self.oppdater_retning() # Sørg for at duden peker riktig vei
-        self.lag_rect()
+        self.lag_rect() # Lag en rect som kan brukes for kollisjon
 
     def oppdater_størrelse(self):
         self.skalert_hode = pg.transform.scale(self.frisyre, self.scale) # Skalerer dude til riktig størrelse
         self.skalert_kropp = pg.transform.scale(self.kropp, self.scale)
     
     def oppdater_retning(self):
-        self.skalert_hode = pg.transform.rotate(self.skalert_hode, self.retning) # Roterer dude i riktig retning
-        self.skalert_kropp = pg.transform.rotate(self.skalert_kropp, self.retning)
+        self.rotert_hode = pg.transform.rotate(self.skalert_hode, self.retning) # Roterer dude i riktig retning
+        self.rotert_kropp = pg.transform.rotate(self.skalert_kropp, self.retning)
 
     def lag_rect(self):
-        self.dude_rect = self.skalert_hode.get_rect(center = (CENTER_X,CENTER_Y))
+        self.dude_rect = self.rotert_hode.get_rect(center = (self.x, self.y))
         
     def tegn_hode(self, skjerm):
-        skjerm.blit(self.skalert_hode, self.dude_rect) # Viser den nye, og skalerte, duden
+        skjerm.blit(self.rotert_hode, self.dude_rect) # Viser den nye, og skalerte, duden
 
     def tegn_kropp(self, skjerm):
-        skjerm.blit(self.skalert_kropp, self.dude_rect) # Viser den nye, og skalerte, duden
+        skjerm.blit(self.rotert_kropp, self.dude_rect) # Viser den nye, og skalerte, duden
 
     def oppdater_walkcycle(self):
         if walking:
@@ -225,4 +225,4 @@ while running:
         DUDE.frisyre = DUDE.hair3 
     DUDE.oppdater_størrelse() # VIKTIG! passer på at duden er skalert riktig når frisyren byttes
 
-    print(f"X = {MAP.offset_x}, Y = {MAP.offset_y}")
+    # print(f"X = {MAP.offset_x}, Y = {MAP.offset_y}")
