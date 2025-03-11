@@ -46,6 +46,9 @@ class Dude():
     Lag en dude
     """
     def __init__(self, x, y, størrelse):
+        self.pos = (x, y) # Posisjonen til dude (Definert ved skapelse)
+        self.størrelse = størrelse # Størrelsen til dude (Definert i -- Objektinstillinger --)
+
         self.hair0 = pg.image.load("Prosjekt-Pygame\Sprites\Head_hair0.png") # Frisyrer (For parykkene)
         self.hair1 = pg.image.load("Prosjekt-Pygame\Sprites\Head_hair1.png") # 1
         self.hair2 = pg.image.load("Prosjekt-Pygame\Sprites\Head_hair2.png") # 2
@@ -59,11 +62,6 @@ class Dude():
         self.walkcycle = [self.body0, self.body1, self.body2] # Liste med forskjellige "stages" i walkcyclen
         self.walking_timer = 0 # En klokke som tikker oppover og holder styr over hvor i walkcyclen vi er
 
-        self.størrelse = størrelse # Størrelsen til dude (Definert i -- Objektinstillinger --)
-        self.width = self.størrelse[0] # Bredde til dude
-        self.height = self.størrelse[1]
-        self.center = (self.width//2, self.height//2)
-        
         self.opp = 0 # Retningene dude peker
         self.ned = 180 
         self.venstre = 90
@@ -78,7 +76,7 @@ class Dude():
         self.oppdater_størrelse() # Skalerer dude til riktig størrelse (basert på self.størrelse)
         self.oppdater_retning() # Roterer dude til riktig retning (basert på self.retning)
         self.oppdater_rect() # Lager en rect som kan brukes for posisjon og rotasjon
-        self.kollisjonsboks() # Lager en rect som kan brukes for kollisjon 
+        # self.kollisjon() # Lager en rect som kan brukes for kollisjon, og sjekker for kollisjon med recten
 
     def oppdater_størrelse(self):
         self.skalert_hode = pg.transform.scale(self.frisyre, self.størrelse) # Skalerer dude til riktig størrelse
@@ -89,10 +87,12 @@ class Dude():
         self.rotert_kropp = pg.transform.rotate(self.skalert_kropp, self.retning)
 
     def oppdater_rect(self):
-        self.dude_rect = self.rotert_hode.get_rect(center = SCREEN_CENTER)
+        self.dude_rect = self.rotert_hode.get_rect(center = self.pos)
 
-    def kollisjonsboks(self):
-        self.kollisjon_rect = self.skalert_hode.get_rect(center = SCREEN_CENTER)
+    def kollisjon(self):
+        self.kollisjon_rect = self.skalert_hode.get_rect(center = self.pos)
+        if self.kollisjon_rect.colliderect(self.kollisjon, Map.VisMap.vegg_rect):
+             print("Collided")
 
     def tegn_hode(self, skjerm):
         print("tegn_hode run")
@@ -136,13 +136,14 @@ class Map():
             pg.draw.rect(SKJERM, (VEGG_FARGE), (pos[0] * tilesize + self.offset_x, pos[1] * tilesize + self.offset_y, tilesize, tilesize))
 
 
+
 # --------------------------------- Spilløkke ------------------------------------
     
 # -- Oprett objektene: --
-DUDE = Dude(CENTER_X, CENTER_Y, DUDE_STØRRELSE) # Lager en "dude"
-
 MAP = Map(MAP_STØRRELSE) # Lager et instans av Map classen
 MAP_1 = MAP.LoadMap("Prosjekt-Pygame/maps/map1.json")
+
+DUDE = Dude(CENTER_X, CENTER_Y, DUDE_STØRRELSE) # Lager en "dude"
 
 # -- Hovedløkken til spillet --
 running = True
@@ -157,7 +158,7 @@ while running:
 
     taster = pg.key.get_pressed() # Holder en liste over alle taster som er trykt ned 
 
-    # Bevegelse (flytter map/bakgrunn)
+    # -- Bevegelse (flytter map/bakgrunn) --
     walking = False # Default verdien av walking er false (altså man står stille når ingenting skjer)
     
     bitmask = 0
@@ -208,9 +209,11 @@ while running:
         DUDE.retning = DUDE.opp_høyre
         walking = True
 
+    # -- Logikk --
     DUDE.oppdater_retning() # VIKTIG! Passer på at duden peker i riktig retning når den byttes
     DUDE.oppdater_rect() # VIKTIG! Passer på at rectangle er oppdatert når karakteren endrer seg!!!! :=()
     DUDE.oppdater_walkcycle()  # Oppdater walkcycle hvis spilleren går
+    # DUDE.kollisjon()
 
     # -- Vis skjermobjekter --
     SKJERM.fill(BG_FARGE)
