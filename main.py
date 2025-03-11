@@ -28,7 +28,7 @@ MAP_STØRRELSE = 250 # 200 = normal
 VEGG_FARGE = (GRÅ)
 
 # -- Objektinstillinger --
-DUDE_STØRRELSE = (150, 150) # BREDDE x HØYDE
+DUDE_STØRRELSE = 1.2 # 1.2 normal
 
 # -- Definer skjerm --
 SKJERM = pg.display.set_mode((SKJERM_BREDDE, SKJERM_HØYDE))
@@ -36,7 +36,6 @@ BG_FARGE = (HVIT)
 
 CENTER_X = SKJERM_BREDDE//2 # Midten av skjermen
 CENTER_Y = SKJERM_HØYDE//2
-SCREEN_CENTER = (CENTER_X, CENTER_Y)
 
 
 # --------------------------------- Objektkontroll -----------------------------------
@@ -46,18 +45,20 @@ class Dude():
     Lag en dude
     """
     def __init__(self, x, y, størrelse):
+        self.x = x 
+        self.y = y
         self.pos = (x, y) # Posisjonen til dude (Definert ved skapelse)
         self.størrelse = størrelse # Størrelsen til dude (Definert i -- Objektinstillinger --)
 
-        self.hair0 = pg.image.load("Prosjekt-Pygame\Sprites\Head_hair0.png") # Frisyrer (For parykkene)
-        self.hair1 = pg.image.load("Prosjekt-Pygame\Sprites\Head_hair1.png") # 1
-        self.hair2 = pg.image.load("Prosjekt-Pygame\Sprites\Head_hair2.png") # 2
-        self.hair3 = pg.image.load("Prosjekt-Pygame\Sprites\Head_hair3.png") # 3
+        self.hair0 = pg.image.load("Sprites\Head_hair0.png") # Frisyrer (For parykkene)
+        self.hair1 = pg.image.load("Sprites\Head_hair1.png") # 1
+        self.hair2 = pg.image.load("Sprites\Head_hair2.png") # 2
+        self.hair3 = pg.image.load("Sprites\Head_hair3.png") # 3
         self.frisyre = self.hair0 # Frisyren dude starter med
 
-        self.body0 = pg.image.load("Prosjekt-Pygame\Sprites\Body0.png") # Kropp-stadier (for walkcycle)
-        self.body1 = pg.image.load("Prosjekt-Pygame\Sprites\Body1.png") # 1
-        self.body2 = pg.image.load("Prosjekt-Pygame\Sprites\Body2.png") # 2
+        self.body0 = pg.image.load("Sprites\Body0.png") # Kropp-stadier (for walkcycle)
+        self.body1 = pg.image.load("Sprites\Body1.png") # 1
+        self.body2 = pg.image.load("Sprites\Body2.png") # 2
         self.kropp = self.body0 # Idle kropp
         self.walkcycle = [self.body0, self.body1, self.body2] # Liste med forskjellige "stages" i walkcyclen
         self.walking_timer = 0 # En klokke som tikker oppover og holder styr over hvor i walkcyclen vi er
@@ -79,9 +80,11 @@ class Dude():
         self.kollisjon() # Lager en rect som kan brukes for kollisjon, og sjekker for kollisjon med recten
 
     def oppdater_størrelse(self):
-        self.skalert_hode = pg.transform.scale(self.frisyre, self.størrelse) # Skalerer dude til riktig størrelse
-        self.skalert_kropp = pg.transform.scale(self.kropp, self.størrelse)
-    
+        self.skalert_hode = pg.transform.scale_by(self.frisyre, self.størrelse) # Skalerer dude til riktig størrelse
+        self.skalert_kropp = pg.transform.scale_by(self.kropp, self.størrelse)
+
+        self.hitbox = self.skalert_hode.get_rect(center = self.pos).scale_by(self.størrelse-0.5) # Skalerer hitbox til riktig størrelse
+
     def oppdater_retning(self):
         self.rotert_hode = pg.transform.rotate(self.skalert_hode, self.retning) # Roterer dude i riktig retning
         self.rotert_kropp = pg.transform.rotate(self.skalert_kropp, self.retning)
@@ -90,27 +93,37 @@ class Dude():
         self.dude_rect = self.rotert_hode.get_rect(center = self.pos)
 
     def kollisjon(self):
-        self.kollisjon_rect = self.skalert_hode.get_rect(center = self.pos)
         for vegg in MAP_VEGGER:
-            if self.kollisjon_rect.colliderect(vegg):
+            if self.hitbox.colliderect(vegg):
                 if self.retning == self.opp:
-                    pass
-                elif self.retning == self.venstre:
-                    pass
-                elif self.retning == self.ned:
-                    pass
-                elif self.retning == self.høyre:
-                    pass
-                elif self.retning == self.opp_venstre:
-                    pass
-                elif self.retning == self.ned_venstre:
-                    pass
-                elif self.retning == self.ned_høyre:
-                    pass
-                elif self.retning == self.opp_høyre:
-                    pass
-                
+                    # print("Collided top")
+                    MAP.offset_y -= vegg.bottom - self.hitbox.top
 
+                elif self.retning == self.venstre:
+                    # print("Collided left")
+                    MAP.offset_x -= vegg.right - self.hitbox.left
+
+                elif self.retning == self.ned:
+                    # print("Collided down")
+                    MAP.offset_y -= vegg.top - self.hitbox.bottom
+
+                elif self.retning == self.høyre:
+                    # print("Collided right")
+                    MAP.offset_x -= vegg.left - self.hitbox.right
+
+                elif self.retning == self.opp_venstre:
+                    print("Collided left up")
+
+                elif self.retning == self.ned_venstre:
+                    print("Collided left down")
+                        
+                elif self.retning == self.ned_høyre:
+                    print("Collided down right")
+
+                elif self.retning == self.opp_høyre:
+                    print("Collided up right")
+
+                
     def tegn_hode(self, skjerm):
         skjerm.blit(self.rotert_hode, self.dude_rect) # Viser den nye, og skalerte, duden
 
@@ -137,8 +150,8 @@ class Map():
     """
     def __init__(self, størrelse):
         self.tilesize = størrelse
-        self.offset_x = -3760 # Startposisjon (midten av kartet)
-        self.offset_y = -2821
+        self.offset_x = -4837 # Startposisjon (midten av kartet)
+        self.offset_y = -3718
 
     def LoadMap(self, mapfil):
         with open(mapfil, "r") as fil:
@@ -163,7 +176,7 @@ class Map():
 
 # -- Oprett objektene: --
 MAP = Map(MAP_STØRRELSE) # Lager et instans av Map classen
-MAP_1 = MAP.LoadMap("Prosjekt-Pygame/maps/map1.json")
+MAP_1 = MAP.LoadMap("maps\map1.json")
 MAP_VEGGER = []
 MAP.LagVegger(MAP_1)
 
@@ -242,6 +255,7 @@ while running:
 
     # -- Vis skjermobjekter --
     SKJERM.fill(BG_FARGE)
+    pg.draw.rect(SKJERM, (200,200,200), DUDE.hitbox)
     DUDE.tegn_kropp(SKJERM)
     DUDE.tegn_hode(SKJERM)
     MAP.VisMap(MAP_1)
@@ -257,9 +271,10 @@ while running:
         DUDE.frisyre = DUDE.hair3 
     DUDE.oppdater_størrelse() # VIKTIG! passer på at duden er skalert riktig når frisyren byttes
 
-    for vegg in MAP_VEGGER:
-        pg.draw.rect(SKJERM, (RØD), vegg)
+    # for vegg in MAP_VEGGER:
+    #     pg.draw.rect(SKJERM, (RØD), vegg)
     # pg.draw.rect(SKJERM, (200, 200, 200), DUDE.kollisjon_rect)
+    
     # print(f"X = {MAP.offset_x}, Y = {MAP.offset_y}")
 
     pg.display.flip()
