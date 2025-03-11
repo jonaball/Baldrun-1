@@ -47,53 +47,52 @@ class Dude():
     """
     def __init__(self, x, y, størrelse):
         self.hair0 = pg.image.load("Prosjekt-Pygame\Sprites\Head_hair0.png") # Frisyrer (For parykkene)
-        self.hair1 = pg.image.load("Prosjekt-Pygame\Sprites\Head_hair1.png")
-        self.hair2 = pg.image.load("Prosjekt-Pygame\Sprites\Head_hair2.png")
-        self.hair3 = pg.image.load("Prosjekt-Pygame\Sprites\Head_hair3.png")
+        self.hair1 = pg.image.load("Prosjekt-Pygame\Sprites\Head_hair1.png") # 1
+        self.hair2 = pg.image.load("Prosjekt-Pygame\Sprites\Head_hair2.png") # 2
+        self.hair3 = pg.image.load("Prosjekt-Pygame\Sprites\Head_hair3.png") # 3
         self.frisyre = self.hair0 # Frisyren dude starter med
 
         self.body0 = pg.image.load("Prosjekt-Pygame\Sprites\Body0.png") # Kropp-stadier (for walkcycle)
-        self.body1 = pg.image.load("Prosjekt-Pygame\Sprites\Body1.png")
-        self.body2 = pg.image.load("Prosjekt-Pygame\Sprites\Body2.png")
-        self.kropp = self.body0 # Kroppen dude starter med
-
+        self.body1 = pg.image.load("Prosjekt-Pygame\Sprites\Body1.png") # 1
+        self.body2 = pg.image.load("Prosjekt-Pygame\Sprites\Body2.png") # 2
+        self.kropp = self.body0 # Idle kropp
         self.walkcycle = [self.body0, self.body1, self.body2] # Liste med forskjellige "stages" i walkcyclen
         self.walking_timer = 0 # En klokke som tikker oppover og holder styr over hvor i walkcyclen vi er
 
         self.størrelse = størrelse # Størrelsen til dude (Definert i -- Objektinstillinger --)
-        self.width = self.størrelse[0]
+        self.width = self.størrelse[0] # Bredde til dude
         self.height = self.størrelse[1]
         self.center = (self.width//2, self.height//2)
         
-        self.opp = 0 # Retningen DUDE peker
-        self.ned = 180
+        self.opp = 0 # Retningene dude peker
+        self.ned = 180 
         self.venstre = 90
         self.høyre = -90
         self.opp_venstre = 45
         self.ned_venstre = 135
         self.opp_høyre = -45
         self.ned_høyre = -135
-
         self.retning = self.opp # Startretning er alltid opp
 
         # -- justeringer og funksjoner -- 
-        self.oppdater_størrelse() # Sørg for at frisyren er oppdatert til den nye størrelsen
-        self.oppdater_retning() # Sørg for at duden peker riktig vei
-        self.oppdater_rect() # Lag en rect som kan brukes for kollisjon
+        self.oppdater_størrelse() # Skalerer dude til riktig størrelse (basert på self.størrelse)
+        self.oppdater_retning() # Roterer dude til riktig retning (basert på self.retning)
+        self.oppdater_rect() # Lager en rect som kan brukes for posisjon og rotasjon
+        self.kollisjonsboks() # Lager en rect som kan brukes for kollisjon 
 
     def oppdater_størrelse(self):
-        print("oppdater_størrelse run")
         self.skalert_hode = pg.transform.scale(self.frisyre, self.størrelse) # Skalerer dude til riktig størrelse
         self.skalert_kropp = pg.transform.scale(self.kropp, self.størrelse)
     
     def oppdater_retning(self):
-        print("oppdater_retning run")
         self.rotert_hode = pg.transform.rotate(self.skalert_hode, self.retning) # Roterer dude i riktig retning
         self.rotert_kropp = pg.transform.rotate(self.skalert_kropp, self.retning)
 
     def oppdater_rect(self):
-        print("lag_rect run")
-        self.dude_rect = self.rotert_hode.get_rect(center = (CENTER_X, CENTER_Y))
+        self.dude_rect = self.rotert_hode.get_rect(center = SCREEN_CENTER)
+
+    def kollisjonsboks(self):
+        self.kollisjon_rect = self.skalert_hode.get_rect(center = SCREEN_CENTER)
 
     def tegn_hode(self, skjerm):
         print("tegn_hode run")
@@ -104,13 +103,13 @@ class Dude():
         skjerm.blit(self.rotert_kropp, self.dude_rect) # Viser den nye, og skalerte, duden
 
     def oppdater_walkcycle(self):
-        if walking:
+        if walking: # walkcyckle skal bare oppdateres når et input sier at dude går
             if self.walking_timer % 10 == 0: # Walking timer går opp med 1 per frame, hver 10 frames er dette sant
-                self.walking_frame += 1
+                self.walking_frame += 1 # Går til neste bilde i walkcycle lista
                 if self.walking_frame == 3: # Når cyclen har gått igjennom hele lista (etter 3 stages), starter den på nytt fra 0
                     self.walking_frame = 0 
-                self.kropp = self.walkcycle[self.walking_frame]
-            self.walking_timer += 1 # Øker walking timeren
+                self.kropp = self.walkcycle[self.walking_frame] # Setter bildet for kropp til riktig stadie i walkcycle
+            self.walking_timer += 1 # Øker walking timeren hver frame/hver gang oppdater_walkcycle() funksjon blir kallt
         else: # Setter alt tilbake til standard når spilleren slutter å gå
             self.kropp = self.body0
             self.walking_frame = 0
@@ -140,7 +139,7 @@ class Map():
 # --------------------------------- Spilløkke ------------------------------------
     
 # -- Oprett objektene: --
-DUDE = Dude(CENTER_X, CENTER_Y, DUDE_STØRRELSE) # Lager en "Dude"
+DUDE = Dude(CENTER_X, CENTER_Y, DUDE_STØRRELSE) # Lager en "dude"
 
 MAP = Map(MAP_STØRRELSE) # Lager et instans av Map classen
 MAP_1 = MAP.LoadMap("Prosjekt-Pygame/maps/map1.json")
