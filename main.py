@@ -242,12 +242,9 @@ while running:
 
     # -- Vis skjermobjekter --
     SKJERM.fill(BG_FARGE)
-    MAP.VisMap(MAP_1)
     DUDE.tegn_kropp(SKJERM)
     DUDE.tegn_hode(SKJERM)
-
-    pg.display.flip()
-    clock.tick(fps)
+    MAP.VisMap(MAP_1)
 
     # -- Debug -- 
     if taster[pg.K_0]:
@@ -260,5 +257,10 @@ while running:
         DUDE.frisyre = DUDE.hair3 
     DUDE.oppdater_størrelse() # VIKTIG! passer på at duden er skalert riktig når frisyren byttes
 
+    for vegg in MAP_VEGGER:
+        pg.draw.rect(SKJERM, (RØD), vegg)
     # pg.draw.rect(SKJERM, (200, 200, 200), DUDE.kollisjon_rect)
     # print(f"X = {MAP.offset_x}, Y = {MAP.offset_y}")
+
+    pg.display.flip()
+    clock.tick(fps)
