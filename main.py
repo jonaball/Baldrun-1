@@ -24,7 +24,7 @@ SKJERM_HØYDE = 720
 SKJERM_BREDDE = 1080
 
 # -- Mapinstillinger --
-MAP_STØRRELSE = 200 # 200 = normal
+MAP_STØRRELSE = 250 # 200 = normal
 VEGG_FARGE = (GRÅ)
 
 # -- Objektinstillinger --
@@ -76,7 +76,7 @@ class Dude():
         self.oppdater_størrelse() # Skalerer dude til riktig størrelse (basert på self.størrelse)
         self.oppdater_retning() # Roterer dude til riktig retning (basert på self.retning)
         self.oppdater_rect() # Lager en rect som kan brukes for posisjon og rotasjon
-        # self.kollisjon() # Lager en rect som kan brukes for kollisjon, og sjekker for kollisjon med recten
+        self.kollisjon() # Lager en rect som kan brukes for kollisjon, og sjekker for kollisjon med recten
 
     def oppdater_størrelse(self):
         self.skalert_hode = pg.transform.scale(self.frisyre, self.størrelse) # Skalerer dude til riktig størrelse
@@ -91,15 +91,31 @@ class Dude():
 
     def kollisjon(self):
         self.kollisjon_rect = self.skalert_hode.get_rect(center = self.pos)
-        if self.kollisjon_rect.colliderect(self.kollisjon, Map.VisMap.vegg_rect):
-             print("Collided")
+        for vegg in MAP_VEGGER:
+            if self.kollisjon_rect.colliderect(vegg):
+                if self.retning == self.opp:
+                    pass
+                elif self.retning == self.venstre:
+                    pass
+                elif self.retning == self.ned:
+                    pass
+                elif self.retning == self.høyre:
+                    pass
+                elif self.retning == self.opp_venstre:
+                    pass
+                elif self.retning == self.ned_venstre:
+                    pass
+                elif self.retning == self.ned_høyre:
+                    pass
+                elif self.retning == self.opp_høyre:
+                    pass
+                
 
     def tegn_hode(self, skjerm):
-        print("tegn_hode run")
         skjerm.blit(self.rotert_hode, self.dude_rect) # Viser den nye, og skalerte, duden
 
     def tegn_kropp(self, skjerm):
-        print("tegn_kropp run")
+
         skjerm.blit(self.rotert_kropp, self.dude_rect) # Viser den nye, og skalerte, duden
 
     def oppdater_walkcycle(self):
@@ -119,29 +135,37 @@ class Map():
     """
     Map stuff
     """
-    def __init__(self, scale):
-        self.tilesize = scale
+    def __init__(self, størrelse):
+        self.tilesize = størrelse
         self.offset_x = -3760 # Startposisjon (midten av kartet)
         self.offset_y = -2821
 
     def LoadMap(self, mapfil):
         with open(mapfil, "r") as fil:
             return json.load(fil)
-        
-    def VisMap(self, loadedmap):
+    
+    def LagVegger(self, lastetmap):
+        global MAP_VEGGER
         tilesize = self.tilesize
-        for tile in loadedmap:
-            pos = loadedmap[tile]["position"]
-            type = loadedmap[tile]["type"]
+        MAP_VEGGER = []
+        for vegg in lastetmap:
+            pos = lastetmap[vegg]["position"]
+            MAP_VEGGER.append(pg.Rect(pos[0] * tilesize + self.offset_x, pos[1] * tilesize + self.offset_y, tilesize, tilesize))
+
+    def VisMap(self, lastetmap):
+        tilesize = self.tilesize
+        for tile in lastetmap:
+            pos = lastetmap[tile]["position"]
             pg.draw.rect(SKJERM, (VEGG_FARGE), (pos[0] * tilesize + self.offset_x, pos[1] * tilesize + self.offset_y, tilesize, tilesize))
 
 
-
 # --------------------------------- Spilløkke ------------------------------------
-    
+
 # -- Oprett objektene: --
 MAP = Map(MAP_STØRRELSE) # Lager et instans av Map classen
 MAP_1 = MAP.LoadMap("Prosjekt-Pygame/maps/map1.json")
+MAP_VEGGER = []
+MAP.LagVegger(MAP_1)
 
 DUDE = Dude(CENTER_X, CENTER_Y, DUDE_STØRRELSE) # Lager en "dude"
 
@@ -213,7 +237,8 @@ while running:
     DUDE.oppdater_retning() # VIKTIG! Passer på at duden peker i riktig retning når den byttes
     DUDE.oppdater_rect() # VIKTIG! Passer på at rectangle er oppdatert når karakteren endrer seg!!!! :=()
     DUDE.oppdater_walkcycle()  # Oppdater walkcycle hvis spilleren går
-    # DUDE.kollisjon()
+    MAP.LagVegger(MAP_1)
+    DUDE.kollisjon()
 
     # -- Vis skjermobjekter --
     SKJERM.fill(BG_FARGE)
@@ -235,4 +260,5 @@ while running:
         DUDE.frisyre = DUDE.hair3 
     DUDE.oppdater_størrelse() # VIKTIG! passer på at duden er skalert riktig når frisyren byttes
 
+    # pg.draw.rect(SKJERM, (200, 200, 200), DUDE.kollisjon_rect)
     # print(f"X = {MAP.offset_x}, Y = {MAP.offset_y}")
