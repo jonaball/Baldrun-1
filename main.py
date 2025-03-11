@@ -13,7 +13,7 @@ clock = pg.time.Clock()
 # -- Farger --
 SVART = (20, 20, 20)
 HVIT = (255, 255 , 255)
-GRÅ = (80, 80, 80)
+GRÅ = (50, 50, 50)
 RØD = (255, 0, 0)
 GRØNN = (0, 255, 0)
 BLÅ = (0, 0, 255)
@@ -36,6 +36,7 @@ BG_FARGE = (HVIT)
 
 CENTER_X = SKJERM_BREDDE//2 # Midten av skjermen
 CENTER_Y = SKJERM_HØYDE//2
+SCREEN_CENTER = (CENTER_X, CENTER_Y)
 
 
 # --------------------------------- Objektkontroll -----------------------------------
@@ -44,7 +45,7 @@ class Dude():
     """
     Lag en dude
     """
-    def __init__(self, x, y, scale):
+    def __init__(self, x, y, størrelse):
         self.hair0 = pg.image.load("Prosjekt-Pygame\Sprites\Head_hair0.png") # Frisyrer (For parykkene)
         self.hair1 = pg.image.load("Prosjekt-Pygame\Sprites\Head_hair1.png")
         self.hair2 = pg.image.load("Prosjekt-Pygame\Sprites\Head_hair2.png")
@@ -57,13 +58,12 @@ class Dude():
         self.kropp = self.body0 # Kroppen dude starter med
 
         self.walkcycle = [self.body0, self.body1, self.body2] # Liste med forskjellige "stages" i walkcyclen
-        self.walking_timer = 10
+        self.walking_timer = 0 # En klokke som tikker oppover og holder styr over hvor i walkcyclen vi er
 
-        self.scale = scale # Størrelsen til dude (Definert i -- Objektinstillinger --)
-        self.width = self.scale[0]
-        self.height = self.scale[1]
-        self.x = x - self.width//2
-        self.y = y - self.height//2
+        self.størrelse = størrelse # Størrelsen til dude (Definert i -- Objektinstillinger --)
+        self.width = self.størrelse[0]
+        self.height = self.størrelse[1]
+        self.center = (self.width//2, self.height//2)
         
         self.opp = 0 # Retningen DUDE peker
         self.ned = 180
@@ -76,26 +76,31 @@ class Dude():
 
         self.retning = self.opp # Startretning er alltid opp
 
+        # -- justeringer og funksjoner -- 
         self.oppdater_størrelse() # Sørg for at frisyren er oppdatert til den nye størrelsen
         self.oppdater_retning() # Sørg for at duden peker riktig vei
-        self.lag_rect() # Lag en rect som kan brukes for kollisjon
+        self.oppdater_rect() # Lag en rect som kan brukes for kollisjon
 
     def oppdater_størrelse(self):
-        self.skalert_hode = pg.transform.scale(self.frisyre, self.scale) # Skalerer dude til riktig størrelse
-        self.skalert_kropp = pg.transform.scale(self.kropp, self.scale)
+        print("oppdater_størrelse run")
+        self.skalert_hode = pg.transform.scale(self.frisyre, self.størrelse) # Skalerer dude til riktig størrelse
+        self.skalert_kropp = pg.transform.scale(self.kropp, self.størrelse)
     
     def oppdater_retning(self):
+        print("oppdater_retning run")
         self.rotert_hode = pg.transform.rotate(self.skalert_hode, self.retning) # Roterer dude i riktig retning
         self.rotert_kropp = pg.transform.rotate(self.skalert_kropp, self.retning)
 
-    def lag_rect(self):
-        """ Oppdater rect til å være sentrert på (self.x, self.y) etter rotasjon """
+    def oppdater_rect(self):
+        print("lag_rect run")
         self.dude_rect = self.rotert_hode.get_rect(center = (CENTER_X, CENTER_Y))
 
     def tegn_hode(self, skjerm):
+        print("tegn_hode run")
         skjerm.blit(self.rotert_hode, self.dude_rect) # Viser den nye, og skalerte, duden
 
     def tegn_kropp(self, skjerm):
+        print("tegn_kropp run")
         skjerm.blit(self.rotert_kropp, self.dude_rect) # Viser den nye, og skalerte, duden
 
     def oppdater_walkcycle(self):
@@ -117,8 +122,8 @@ class Map():
     """
     def __init__(self, scale):
         self.tilesize = scale
-        self.offset_x = -3330 # Startposisjon (midten av kartet)
-        self.offset_y = -2350
+        self.offset_x = -3760 # Startposisjon (midten av kartet)
+        self.offset_y = -2821
 
     def LoadMap(self, mapfil):
         with open(mapfil, "r") as fil:
@@ -186,6 +191,7 @@ while running:
         MAP.offset_x += 500/fps/1.4
         MAP.offset_y += 500/fps/1.4
         DUDE.retning = DUDE.opp_venstre
+        DUDE.skrå = True
         walking = True
     elif bitmask == 6: # TRYKKER A S
         MAP.offset_x += 500/fps/1.4
@@ -204,7 +210,7 @@ while running:
         walking = True
 
     DUDE.oppdater_retning() # VIKTIG! Passer på at duden peker i riktig retning når den byttes
-
+    DUDE.oppdater_rect() # VIKTIG! Passer på at rectangle er oppdatert når karakteren endrer seg!!!! :=()
     DUDE.oppdater_walkcycle()  # Oppdater walkcycle hvis spilleren går
 
     # -- Vis skjermobjekter --
