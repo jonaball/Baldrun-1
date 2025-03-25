@@ -1,18 +1,25 @@
--- Core --
+-- Work in progress --
+Parykker - Halvveis feridg
+Collisions - Mangler diagonal
 
-Collisions
+-- Core --
 UI (parykker, timer)
 Main Menu
 Map Menu
 Vision Cone
 
--- Gameplay --
 
-Parykker
-Map Layout
+-- Gameplay --
 Jumpscares (frisør)
 
--- Polish --
 
+-- Polish --
 Map design / texture
 Sound design
+
+
+-- Completed --
+Map Layout
+Walk Cycle
+Rotasjon
+DUDE sprite
