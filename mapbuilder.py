@@ -49,14 +49,17 @@ def DisplayMap():
     for tile in loadedData:
         pos = loadedData[tile]["position"]
         if loadedData[tile]["type"] == "wall":
-            pygame.draw.rect(win, (200, 200, 200), (pos[0]*tilesize, pos[1]*tilesize, tilesize, tilesize))
+            pygame.draw.rect(win, (80, 80, 80), (pos[0]*tilesize, pos[1]*tilesize, tilesize, tilesize))
         elif loadedData[tile]["type"] == "parykk":
             pygame.draw.rect(win, (200, 0, 0), (pos[0]*tilesize, pos[1]*tilesize, tilesize, tilesize))
 
 
 def DisplayHover():
     pos = pygame.mouse.get_pos()
-    pygame.draw.rect(win, (100, 100, 100), (pos[0]-pos[0]%tilesize, pos[1]-pos[1]%tilesize, tilesize, tilesize))
+    if tileType == "wall":
+        pygame.draw.rect(win, (200, 200, 200), (pos[0]-pos[0]%tilesize, pos[1]-pos[1]%tilesize, tilesize, tilesize))
+    elif tileType == "parykk":
+        pygame.draw.rect(win, (255, 100, 100), (pos[0]-pos[0]%tilesize, pos[1]-pos[1]%tilesize, tilesize, tilesize))
 
 def DrawMap(x):
     pos = pygame.mouse.get_pos()
@@ -108,7 +111,7 @@ while True:
             if event.key == pygame.K_p:
                 tileType = "parykk"
             
-    win.fill((0,0,0))
+    win.fill((255,255,255))
     DisplayMap()
     DisplayHover()
     DrawMap(tileType)

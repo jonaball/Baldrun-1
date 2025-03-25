@@ -98,31 +98,27 @@ class Dude():
                 if self.retning == self.opp:
                     # print("Collided top")
                     MAP.offset_y -= vegg.bottom - self.hitbox.top
-
                 elif self.retning == self.venstre:
                     # print("Collided left")
                     MAP.offset_x -= vegg.right - self.hitbox.left
-
                 elif self.retning == self.ned:
                     # print("Collided down")
                     MAP.offset_y -= vegg.top - self.hitbox.bottom
-
                 elif self.retning == self.høyre:
                     # print("Collided right")
                     MAP.offset_x -= vegg.left - self.hitbox.right
-
                 elif self.retning == self.opp_venstre:
                     print("Collided left up")
-
                 elif self.retning == self.ned_venstre:
-                    print("Collided left down")
-                        
+                    print("Collided left down")    
                 elif self.retning == self.ned_høyre:
                     print("Collided down right")
-
                 elif self.retning == self.opp_høyre:
                     print("Collided up right")
                 
+        for parykk in MAP_PARYKKER:
+            pass
+
     def tegn_hode(self, skjerm):
         skjerm.blit(self.rotert_hode, self.dude_rect) # Viser den nye, og skalerte, duden
 
@@ -145,30 +141,41 @@ class Dude():
         
 class Map():
     """
-    Map stuff
+    Lag et map
     """
     def __init__(self, størrelse):
         self.tilesize = størrelse
         self.offset_x = -4837 # Startposisjon (midten av kartet)
         self.offset_y = -3718
+        self.parykk = pg.image.load("Prosjekt\Bald run\Sprites\Head_hair3.png")
 
     def LoadMap(self, mapfil):
         with open(mapfil, "r") as fil:
             return json.load(fil)
     
-    def LagVegger(self, lastetmap):
+    def LagKollisjonsbokser(self, lastetmap):
         global MAP_VEGGER
+        global MAP_PARYKKER
         tilesize = self.tilesize
         MAP_VEGGER = []
-        for vegg in lastetmap:
-            pos = lastetmap[vegg]["position"]
-            MAP_VEGGER.append(pg.Rect(pos[0] * tilesize + self.offset_x, pos[1] * tilesize + self.offset_y, tilesize, tilesize))
+        MAP_PARYKKER = []
+        for tile in lastetmap:
+            pos = lastetmap[tile]["position"]
+            if lastetmap[tile]["type"] == "wall":
+                MAP_VEGGER.append(pg.Rect(pos[0] * tilesize + self.offset_x, pos[1] * tilesize + self.offset_y, tilesize, tilesize))
+            elif lastetmap[tile]["type"] == "parykk":
+                MAP_PARYKKER.append(pg.Rect(pos[0] * tilesize + self.offset_x, pos[1] * tilesize + self.offset_y, tilesize, tilesize))
 
-    def VisMap(self, lastetmap):
+    def VisMap(self, lastetmap, skjerm):
         tilesize = self.tilesize
         for tile in lastetmap:
             pos = lastetmap[tile]["position"]
-            pg.draw.rect(SKJERM, (VEGG_FARGE), (pos[0] * tilesize + self.offset_x, pos[1] * tilesize + self.offset_y, tilesize, tilesize))
+            if lastetmap[tile]["type"] == "wall":
+                pg.draw.rect(skjerm, (VEGG_FARGE), (pos[0] * tilesize + self.offset_x, pos[1] * tilesize + self.offset_y, tilesize, tilesize))
+            elif lastetmap[tile]["type"] == "parykk":
+                posisjon = pg.Rect(pos[0] * tilesize + self.offset_x, pos[1] * tilesize + self.offset_y, tilesize, tilesize)
+                pg.draw.rect(skjerm, (RØD), (pos[0] * tilesize + self.offset_x, pos[1] * tilesize + self.offset_y, tilesize, tilesize))
+                skjerm.blit(self.parykk, posisjon)
 
 
 # --------------------------------- Spilløkke ------------------------------------
@@ -177,7 +184,8 @@ class Map():
 MAP = Map(MAP_STØRRELSE) # Lager et instans av Map classen
 MAP_1 = MAP.LoadMap("Prosjekt\Bald run\maps\map1.json")
 MAP_VEGGER = []
-MAP.LagVegger(MAP_1)
+MAP_PARYKKER = []
+MAP.LagKollisjonsbokser(MAP_1)
 
 DUDE = Dude(CENTER_X, CENTER_Y, DUDE_STØRRELSE) # Lager en "dude"
 
@@ -249,14 +257,14 @@ while running:
     DUDE.oppdater_retning() # VIKTIG! Passer på at duden peker i riktig retning når den byttes
     DUDE.oppdater_rect() # VIKTIG! Passer på at rectangle er oppdatert når karakteren endrer seg!!!! :=()
     DUDE.oppdater_walkcycle()  # Oppdater walkcycle hvis spilleren går
-    MAP.LagVegger(MAP_1)
+    MAP.LagKollisjonsbokser(MAP_1)
     DUDE.kollisjon()
 
     # -- Vis skjermobjekter --
     SKJERM.fill(BG_FARGE)
     DUDE.tegn_kropp(SKJERM)
     DUDE.tegn_hode(SKJERM)
-    MAP.VisMap(MAP_1)
+    MAP.VisMap(MAP_1, SKJERM)
 
     # -- Debug -- 
     if taster[pg.K_0]:
@@ -269,7 +277,7 @@ while running:
         DUDE.frisyre = DUDE.hair3 
     DUDE.oppdater_størrelse() # VIKTIG! passer på at duden er skalert riktig når frisyren byttes
 
-    # for vegg in MAP_VEGGER:
+    # for vegg in MAP_VEGGER and MAP_PARYKKER:
     #     pg.draw.rect(SKJERM, (RØD), vegg)
     # pg.draw.rect(SKJERM, (200, 200, 200), DUDE.kollisjon_rect)
     

@@ -4458,13 +4458,6 @@
             9
         ]
     },
-    "7,11": {
-        "type": "wall",
-        "position": [
-            7,
-            11
-        ]
-    },
     "16,28": {
         "type": "wall",
         "position": [
@@ -4673,6 +4666,34 @@
         "position": [
             6,
             2
+        ]
+    },
+    "28,6": {
+        "type": "parykk",
+        "position": [
+            28,
+            6
+        ]
+    },
+    "12,12": {
+        "type": "parykk",
+        "position": [
+            12,
+            12
+        ]
+    },
+    "38,24": {
+        "type": "parykk",
+        "position": [
+            38,
+            24
+        ]
+    },
+    "7,11": {
+        "type": "wall",
+        "position": [
+            7,
+            11
         ]
     }
 }
