@@ -50,15 +50,15 @@ class Dude():
         self.pos = (x, y) # Posisjonen til dude (Definert ved skapelse)
         self.størrelse = størrelse # Størrelsen til dude (Definert i -- Objektinstillinger --)
 
-        self.hair0 = pg.image.load("Sprites\Head_hair0.png") # Frisyrer (For parykkene)
-        self.hair1 = pg.image.load("Sprites\Head_hair1.png") # 1
-        self.hair2 = pg.image.load("Sprites\Head_hair2.png") # 2
-        self.hair3 = pg.image.load("Sprites\Head_hair3.png") # 3
+        self.hair0 = pg.image.load("Prosjekt\Bald run\Sprites\Head_hair0.png") # Frisyrer (For parykkene)
+        self.hair2 = pg.image.load("Prosjekt\Bald run\Sprites\Head_hair2.png") # 2
+        self.hair1 = pg.image.load("Prosjekt\Bald run\Sprites\Head_hair1.png") # 1
+        self.hair3 = pg.image.load("Prosjekt\Bald run\Sprites\Head_hair3.png") # 3
         self.frisyre = self.hair0 # Frisyren dude starter med
 
-        self.body0 = pg.image.load("Sprites\Body0.png") # Kropp-stadier (for walkcycle)
-        self.body1 = pg.image.load("Sprites\Body1.png") # 1
-        self.body2 = pg.image.load("Sprites\Body2.png") # 2
+        self.body0 = pg.image.load("Prosjekt\Bald run\Sprites\Body0.png") # Kropp-stadier (for walkcycle)
+        self.body1 = pg.image.load("Prosjekt\Bald run\Sprites\Body1.png") # 1
+        self.body2 = pg.image.load("Prosjekt\Bald run\Sprites\Body2.png") # 2
         self.kropp = self.body0 # Idle kropp
         self.walkcycle = [self.body0, self.body1, self.body2] # Liste med forskjellige "stages" i walkcyclen
         self.walking_timer = 0 # En klokke som tikker oppover og holder styr over hvor i walkcyclen vi er
@@ -122,7 +122,6 @@ class Dude():
 
                 elif self.retning == self.opp_høyre:
                     print("Collided up right")
-
                 
     def tegn_hode(self, skjerm):
         skjerm.blit(self.rotert_hode, self.dude_rect) # Viser den nye, og skalerte, duden
@@ -176,7 +175,7 @@ class Map():
 
 # -- Oprett objektene: --
 MAP = Map(MAP_STØRRELSE) # Lager et instans av Map classen
-MAP_1 = MAP.LoadMap("maps\map1.json")
+MAP_1 = MAP.LoadMap("Prosjekt\Bald run\maps\map1.json")
 MAP_VEGGER = []
 MAP.LagVegger(MAP_1)
 
@@ -225,24 +224,24 @@ while running:
         DUDE.retning = DUDE.høyre
         walking = True
     elif bitmask == 3: # TRYKKER W A
-        MAP.offset_x += 500/fps/1.4
-        MAP.offset_y += 500/fps/1.4
+        MAP.offset_x += 500/fps/1.4143
+        MAP.offset_y += 500/fps/1.4143
         DUDE.retning = DUDE.opp_venstre
         DUDE.skrå = True
         walking = True
     elif bitmask == 6: # TRYKKER A S
-        MAP.offset_x += 500/fps/1.4
-        MAP.offset_y -= 500/fps/1.4
+        MAP.offset_x += 500/fps/1.4143
+        MAP.offset_y -= 500/fps/1.4143
         DUDE.retning = DUDE.ned_venstre
         walking = True
     elif bitmask == 12: # TRYKKER S D
-        MAP.offset_x -= 500/fps/1.4
-        MAP.offset_y -= 500/fps/1.4
+        MAP.offset_x -= 500/fps/1.4143
+        MAP.offset_y -= 500/fps/1.4143
         DUDE.retning = DUDE.ned_høyre
         walking = True
     elif bitmask == 9: # TRYKKER D W
-        MAP.offset_x -= 500/fps/1.4
-        MAP.offset_y += 500/fps/1.4
+        MAP.offset_x -= 500/fps/1.4143
+        MAP.offset_y += 500/fps/1.4143
         DUDE.retning = DUDE.opp_høyre
         walking = True
 
@@ -255,7 +254,6 @@ while running:
 
     # -- Vis skjermobjekter --
     SKJERM.fill(BG_FARGE)
-    pg.draw.rect(SKJERM, (200,200,200), DUDE.hitbox)
     DUDE.tegn_kropp(SKJERM)
     DUDE.tegn_hode(SKJERM)
     MAP.VisMap(MAP_1)

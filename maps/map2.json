@@ -1,9 +1,387 @@
 {
+    "10,4": {
+        "type": "wall",
+        "position": [
+            10,
+            4
+        ]
+    },
+    "14,9": {
+        "type": "wall",
+        "position": [
+            14,
+            9
+        ]
+    },
     "17,12": {
         "type": "wall",
         "position": [
             17,
             12
+        ]
+    },
+    "20,14": {
+        "type": "wall",
+        "position": [
+            20,
+            14
+        ]
+    },
+    "24,16": {
+        "type": "wall",
+        "position": [
+            24,
+            16
+        ]
+    },
+    "25,17": {
+        "type": "wall",
+        "position": [
+            25,
+            17
+        ]
+    },
+    "27,18": {
+        "type": "wall",
+        "position": [
+            27,
+            18
+        ]
+    },
+    "26,5": {
+        "type": "wall",
+        "position": [
+            26,
+            5
+        ]
+    },
+    "25,6": {
+        "type": "wall",
+        "position": [
+            25,
+            6
+        ]
+    },
+    "25,7": {
+        "type": "wall",
+        "position": [
+            25,
+            7
+        ]
+    },
+    "23,9": {
+        "type": "wall",
+        "position": [
+            23,
+            9
+        ]
+    },
+    "21,11": {
+        "type": "wall",
+        "position": [
+            21,
+            11
+        ]
+    },
+    "20,13": {
+        "type": "wall",
+        "position": [
+            20,
+            13
+        ]
+    },
+    "19,13": {
+        "type": "wall",
+        "position": [
+            19,
+            13
+        ]
+    },
+    "18,14": {
+        "type": "wall",
+        "position": [
+            18,
+            14
+        ]
+    },
+    "18,15": {
+        "type": "wall",
+        "position": [
+            18,
+            15
+        ]
+    },
+    "17,15": {
+        "type": "wall",
+        "position": [
+            17,
+            15
+        ]
+    },
+    "18,11": {
+        "type": "wall",
+        "position": [
+            18,
+            11
+        ]
+    },
+    "19,9": {
+        "type": "wall",
+        "position": [
+            19,
+            9
+        ]
+    },
+    "20,8": {
+        "type": "wall",
+        "position": [
+            20,
+            8
+        ]
+    },
+    "20,7": {
+        "type": "wall",
+        "position": [
+            20,
+            7
+        ]
+    },
+    "20,6": {
+        "type": "wall",
+        "position": [
+            20,
+            6
+        ]
+    },
+    "19,7": {
+        "type": "wall",
+        "position": [
+            19,
+            7
+        ]
+    },
+    "16,7": {
+        "type": "wall",
+        "position": [
+            16,
+            7
+        ]
+    },
+    "13,9": {
+        "type": "wall",
+        "position": [
+            13,
+            9
+        ]
+    },
+    "11,11": {
+        "type": "wall",
+        "position": [
+            11,
+            11
+        ]
+    },
+    "11,12": {
+        "type": "wall",
+        "position": [
+            11,
+            12
+        ]
+    },
+    "12,13": {
+        "type": "wall",
+        "position": [
+            12,
+            13
+        ]
+    },
+    "13,13": {
+        "type": "wall",
+        "position": [
+            13,
+            13
+        ]
+    },
+    "14,14": {
+        "type": "wall",
+        "position": [
+            14,
+            14
+        ]
+    },
+    "17,13": {
+        "type": "wall",
+        "position": [
+            17,
+            13
+        ]
+    },
+    "18,13": {
+        "type": "wall",
+        "position": [
+            18,
+            13
+        ]
+    },
+    "18,12": {
+        "type": "wall",
+        "position": [
+            18,
+            12
+        ]
+    },
+    "17,11": {
+        "type": "wall",
+        "position": [
+            17,
+            11
+        ]
+    },
+    "13,6": {
+        "type": "wall",
+        "position": [
+            13,
+            6
+        ]
+    },
+    "9,4": {
+        "type": "wall",
+        "position": [
+            9,
+            4
+        ]
+    },
+    "8,4": {
+        "type": "wall",
+        "position": [
+            8,
+            4
+        ]
+    },
+    "9,6": {
+        "type": "wall",
+        "position": [
+            9,
+            6
+        ]
+    },
+    "12,10": {
+        "type": "wall",
+        "position": [
+            12,
+            10
+        ]
+    },
+    "14,15": {
+        "type": "wall",
+        "position": [
+            14,
+            15
+        ]
+    },
+    "16,16": {
+        "type": "wall",
+        "position": [
+            16,
+            16
+        ]
+    },
+    "16,17": {
+        "type": "wall",
+        "position": [
+            16,
+            17
+        ]
+    },
+    "18,16": {
+        "type": "wall",
+        "position": [
+            18,
+            16
+        ]
+    },
+    "19,16": {
+        "type": "wall",
+        "position": [
+            19,
+            16
+        ]
+    },
+    "19,15": {
+        "type": "wall",
+        "position": [
+            19,
+            15
+        ]
+    },
+    "20,15": {
+        "type": "wall",
+        "position": [
+            20,
+            15
+        ]
+    },
+    "15,13": {
+        "type": "wall",
+        "position": [
+            15,
+            13
+        ]
+    },
+    "12,11": {
+        "type": "wall",
+        "position": [
+            12,
+            11
+        ]
+    },
+    "13,16": {
+        "type": "wall",
+        "position": [
+            13,
+            16
+        ]
+    },
+    "16,21": {
+        "type": "wall",
+        "position": [
+            16,
+            21
+        ]
+    },
+    "17,23": {
+        "type": "wall",
+        "position": [
+            17,
+            23
+        ]
+    },
+    "18,23": {
+        "type": "wall",
+        "position": [
+            18,
+            23
+        ]
+    },
+    "19,23": {
+        "type": "wall",
+        "position": [
+            19,
+            23
+        ]
+    },
+    "19,22": {
+        "type": "wall",
+        "position": [
+            19,
+            22
+        ]
+    },
+    "19,21": {
+        "type": "wall",
+        "position": [
+            19,
+            21
         ]
     }
 }
