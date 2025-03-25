@@ -48,27 +48,31 @@ print(loadedData)
 def DisplayMap():
     for tile in loadedData:
         pos = loadedData[tile]["position"]
-        type = loadedData[tile]["type"]
-        pygame.draw.rect(win, (200, 200, 200), (pos[0]*tilesize, pos[1]*tilesize, tilesize, tilesize))
+        if loadedData[tile]["type"] == "wall":
+            pygame.draw.rect(win, (200, 200, 200), (pos[0]*tilesize, pos[1]*tilesize, tilesize, tilesize))
+        elif loadedData[tile]["type"] == "parykk":
+            pygame.draw.rect(win, (200, 0, 0), (pos[0]*tilesize, pos[1]*tilesize, tilesize, tilesize))
+
 
 def DisplayHover():
     pos = pygame.mouse.get_pos()
     pygame.draw.rect(win, (100, 100, 100), (pos[0]-pos[0]%tilesize, pos[1]-pos[1]%tilesize, tilesize, tilesize))
 
-def DrawMap():
+def DrawMap(x):
     pos = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
     tilepos = [pos[0]//tilesize, pos[1]//tilesize]
+    type = x
 
-    tileType = "wall"
     if click[0] == True:
-        loadedData[f"{tilepos[0]},{tilepos[1]}"] = {"type": tileType, "position": tilepos}
+        loadedData[f"{tilepos[0]},{tilepos[1]}"] = {"type": type, "position": tilepos}
     if click[2] == True:
         try:
             loadedData.pop(f"{tilepos[0]},{tilepos[1]}")
         except:
             print(f"No tile at {tilepos} to remove.")
 
+tileType = "wall"
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -99,11 +103,15 @@ while True:
                     currentMap -= 1
                     MAP_TO_EDIT = f"Prosjekt\Bald run\maps/map{currentMap}.json"
                     loadedData = loadJson(MAP_TO_EDIT)
+            if event.key == pygame.K_w:
+                tileType = "wall"
+            if event.key == pygame.K_p:
+                tileType = "parykk"
             
     win.fill((0,0,0))
     DisplayMap()
     DisplayHover()
-    DrawMap()
+    DrawMap(tileType)
     
     pygame.display.flip()
     clock.tick(60)

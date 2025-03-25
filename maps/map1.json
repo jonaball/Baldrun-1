@@ -1756,13 +1756,6 @@
             3
         ]
     },
-    "6,2": {
-        "type": "wall",
-        "position": [
-            6,
-            2
-        ]
-    },
     "4,7": {
         "type": "wall",
         "position": [
@@ -2523,13 +2516,6 @@
         "type": "wall",
         "position": [
             10,
-            2
-        ]
-    },
-    "9,2": {
-        "type": "wall",
-        "position": [
-            9,
             2
         ]
     },
@@ -4673,6 +4659,20 @@
         "position": [
             18,
             28
+        ]
+    },
+    "9,2": {
+        "type": "wall",
+        "position": [
+            9,
+            2
+        ]
+    },
+    "6,2": {
+        "type": "wall",
+        "position": [
+            6,
+            2
         ]
     }
 }
