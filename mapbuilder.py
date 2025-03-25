@@ -41,7 +41,7 @@ pygame.display.set_caption("BALD RUN v1.0 - MAP EDITOR")
 position = (0, 0)
 tilesize = 25
 currentMap = 1
-MAP_TO_EDIT = f"Prosjekt\Bald run\maps/map{currentMap}.json" # ENDRE DENNE TIL MAP DU VIL ENDRE
+MAP_TO_EDIT = f"Bald run\maps/map{currentMap}.json" # ENDRE DENNE TIL MAP DU VIL ENDRE
 loadedData = loadJson(MAP_TO_EDIT)
 print(loadedData)
 
@@ -92,19 +92,19 @@ while True:
                 saveJson(loadedData, MAP_TO_EDIT)
                 # LOAD
                 currentMap += 1
-                MAP_TO_EDIT = f"Prosjekt\Bald run\maps/map{currentMap}.json"
+                MAP_TO_EDIT = f"Bald run\maps/map{currentMap}.json"
                 if loadJson(MAP_TO_EDIT) != None:
                     loadedData = loadJson(MAP_TO_EDIT)
                 else:
                     currentMap -= 1
-                    MAP_TO_EDIT = f"Prosjekt\Bald run\maps/map{currentMap}.json"
+                    MAP_TO_EDIT = f"Bald run\maps/map{currentMap}.json"
             if event.key == pygame.K_LEFT:
                 if currentMap != 1:
                     # SAVE
                     saveJson(loadedData, MAP_TO_EDIT)
                     # LOAD
                     currentMap -= 1
-                    MAP_TO_EDIT = f"Prosjekt\Bald run\maps/map{currentMap}.json"
+                    MAP_TO_EDIT = f"Bald run\maps/map{currentMap}.json"
                     loadedData = loadJson(MAP_TO_EDIT)
             if event.key == pygame.K_w:
                 tileType = "wall"

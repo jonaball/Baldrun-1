@@ -50,15 +50,15 @@ class Dude():
         self.pos = (x, y) # Posisjonen til dude (Definert ved skapelse)
         self.størrelse = størrelse # Størrelsen til dude (Definert i -- Objektinstillinger --)
 
-        self.hair0 = pg.image.load("Prosjekt\Bald run\Sprites\Head_hair0.png") # Frisyrer (For parykkene)
-        self.hair2 = pg.image.load("Prosjekt\Bald run\Sprites\Head_hair2.png") # 2
-        self.hair1 = pg.image.load("Prosjekt\Bald run\Sprites\Head_hair1.png") # 1
-        self.hair3 = pg.image.load("Prosjekt\Bald run\Sprites\Head_hair3.png") # 3
+        self.hair0 = pg.image.load("Bald run\Sprites\Head_hair0.png") # Frisyrer (For parykkene)
+        self.hair2 = pg.image.load("Bald run\Sprites\Head_hair2.png") # 2
+        self.hair1 = pg.image.load("Bald run\Sprites\Head_hair1.png") # 1
+        self.hair3 = pg.image.load("Bald run\Sprites\Head_hair3.png") # 3
         self.frisyre = self.hair0 # Frisyren dude starter med
 
-        self.body0 = pg.image.load("Prosjekt\Bald run\Sprites\Body0.png") # Kropp-stadier (for walkcycle)
-        self.body1 = pg.image.load("Prosjekt\Bald run\Sprites\Body1.png") # 1
-        self.body2 = pg.image.load("Prosjekt\Bald run\Sprites\Body2.png") # 2
+        self.body0 = pg.image.load("Bald run\Sprites\Body0.png") # Kropp-stadier (for walkcycle)
+        self.body1 = pg.image.load("Bald run\Sprites\Body1.png") # 1
+        self.body2 = pg.image.load("Bald run\Sprites\Body2.png") # 2
         self.kropp = self.body0 # Idle kropp
         self.walkcycle = [self.body0, self.body1, self.body2] # Liste med forskjellige "stages" i walkcyclen
         self.walking_timer = 0 # En klokke som tikker oppover og holder styr over hvor i walkcyclen vi er
@@ -147,7 +147,7 @@ class Map():
         self.tilesize = størrelse
         self.offset_x = -4837 # Startposisjon (midten av kartet)
         self.offset_y = -3718
-        self.parykk = pg.image.load("Prosjekt\Bald run\Sprites\Head_hair3.png")
+        self.parykk = pg.image.load("Bald run\Sprites\Head_hair3.png")
 
     def LoadMap(self, mapfil):
         with open(mapfil, "r") as fil:
@@ -182,7 +182,7 @@ class Map():
 
 # -- Oprett objektene: --
 MAP = Map(MAP_STØRRELSE) # Lager et instans av Map classen
-MAP_1 = MAP.LoadMap("Prosjekt\Bald run\maps\map1.json")
+MAP_1 = MAP.LoadMap("Bald run\maps\map1.json")
 MAP_VEGGER = []
 MAP_PARYKKER = []
 MAP.LagKollisjonsbokser(MAP_1)
